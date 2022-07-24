@@ -14,6 +14,22 @@ const temp = document.getElementById('temp');
 const weather = document.getElementById('weather');
 const range = document.getElementById('range');
 
+//li passem l'id de search form
+const searchform = document.getElementById('search-form');
+//volem obtenir l'informacio dels searchbox
+const searchbox = document.getElementById('searchbox');
+//a aquest form quan hi ha un event vamos a correr una funcio
+searchform.addEventListener('submit', onSubmit, true);
+
+//Creem la funcio de OnSubmit que rep un event
+function onSubmit(event) {
+    //important el preventDefault perquè no faci una 
+    //redenderització de la p+àgina quan perdem el submit
+    event.preventDefault();
+    //posem la informació de dins el searchbox,és a dir, si escric barcelona i apreto, sortirà barcelona
+    search(searchbox.value);
+}
+
 //basat en la temperatura, posem una imatge o una altra
 function updateImages(data){
     const temp = toCelsius(data.main.temp);
@@ -32,7 +48,7 @@ async function search(query) {
         //fetch per obtenir la informació
         //agafem la url per buscar, la q per buscar el pais o ciutat i a 
         //part li passem la clau de l'api i el llenguatge que és espanyol
-        const response = await fetch(`${api.url}?q=${query}&appid=${api.key}&lang=es`)
+        const response = await fetch(`${api.url}?q=${query}&appid=${api.key}&lang=es`);
         //per obtenir la data
         const data = await response.json();
         //amb l'id card fem que no surti el card amb la info fins que no busquem
@@ -41,7 +57,7 @@ async function search(query) {
         //per assegurarnos que la data est`s sent passada
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
-        data.innerHTML = (new Date()).toLocaleDateString();
+        date.innerHTML = (new Date()).toLocaleDateString();
         temp.innerHTML = `${toCelsius(data.main.temp)}c`;
         weather.innerHTML = data.weather[0].description;
         range.innerHTML = `${toCelsius(data.main.temp_min)}c / ${toCelsius(data.main.temp_max)}c`;
@@ -56,19 +72,6 @@ async function search(query) {
 function toCelsius (kelvin) {
     return Math.round(kelvin - 273.15);
 }
-//Creem la funcio de OnSubmit que rep un event
-function onSubmit(event) {
-    //important el preventDefault perquè no faci una 
-    //redenderització de la p+àgina quan perdem el submit
-    event.preventDefault();
-    //posem la informació de dins el searchbox,és a dir, si escric barcelona i apreto, sortirà barcelona
-    search(searchbox.value);
-}
 
 
-//li passem l'id de search form
-const searchform = document.getElementById('search-form');
-//volem obtenir l'informacio dels searchbox
-const searchbox = document.getElementById('searchbox');
-//a aquest form quan hi ha un event vamos a correr una funcio
-searchform.addEventListener('submit', onSubmit, true);
+
