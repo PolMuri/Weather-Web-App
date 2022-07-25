@@ -14,6 +14,11 @@ const temp = document.getElementById('temp');
 const weather = document.getElementById('weather');
 const range = document.getElementById('range');
 
+//funció per fer la primera lletra majúscula del tipus de temps
+function firstLetterUpper(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  } 
+
 //li passem l'id de search form
 const searchform = document.getElementById('search-form');
 //volem obtenir l'informacio dels searchbox
@@ -42,6 +47,11 @@ function updateImages(data){
     tempImg.src=src;
 }
 
+//natejem el nom de la ciutat buscada, així ho deixem llest per buscar la següent
+const clearName = () => {
+    searchbox.value = "" ;
+}
+
 //funció que ens permetrà treure la informació de la api
 async function search(query) {
     try {
@@ -59,10 +69,13 @@ async function search(query) {
         city.innerHTML = `${data.name}, ${data.sys.country}`;
         date.innerHTML = (new Date()).toLocaleDateString();
         temp.innerHTML = `${toCelsius(data.main.temp)}c`;
+        //la primera lletra majúscula al tipus de temps
         weather.innerHTML = data.weather[0].description;
         range.innerHTML = `${toCelsius(data.main.temp_min)}c / ${toCelsius(data.main.temp_max)}c`;
         //basat en la temperatura, posem una imatge o una altra
         updateImages(data);
+        //natejem el nom de la ciutat buscada amb aquesta funció
+        clearName(); 
     } catch (err) {
         console.log(err);
         alert('HO SENTIM, hi ha hagut un ERROR!!')
