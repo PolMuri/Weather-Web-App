@@ -103,5 +103,12 @@ footer {
 .weather{
     font-size: 1.8rem;
     margin-bottom: 1rem;
+    /*per posar la primera lletra MAJÚSCULA*/
+    text-transform: capitalize;
+
 }
 
+.country {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}

@@ -14,11 +14,6 @@ const temp = document.getElementById('temp');
 const weather = document.getElementById('weather');
 const range = document.getElementById('range');
 
-//funció per fer la primera lletra majúscula del tipus de temps
-function firstLetterUpper(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  } 
-
 //li passem l'id de search form
 const searchform = document.getElementById('search-form');
 //volem obtenir l'informacio dels searchbox
@@ -41,7 +36,7 @@ function updateImages(data){
     let src='images/temp-mid.png';
     if(temp>=30){
       src= 'images/temp-high.png';
-    }else if(temp<20) {
+    }else if(temp<18) {
       src='images/temp-low.png';
     }
     tempImg.src=src;
@@ -64,7 +59,7 @@ async function search(query) {
         //amb l'id card fem que no surti el card amb la info fins que no busquem
         //la primera ciutat
         card.style.display = 'block';
-        //per assegurarnos que la data est`s sent passada
+        //per assegurarnos que la data està sent passada
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
         date.innerHTML = (new Date()).toLocaleDateString();
@@ -82,9 +77,15 @@ async function search(query) {
     }
 }
 
+//convertim la temperatura a Celsius
 function toCelsius (kelvin) {
     return Math.round(kelvin - 273.15);
 }
 
 
 
+
+
+
+
+    
