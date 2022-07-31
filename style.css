@@ -24,6 +24,10 @@ p {
 
 }
 
+p1 {
+    font-size: 0.6rem;
+}
+
 footer {
     /*que estigui sempre fixe a baix de tot, com ho volemd e centrat, com volem la línia,
     etc*/
