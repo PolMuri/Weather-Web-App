@@ -18,6 +18,26 @@ a{
     color: rgb(124, 124, 247);
 }
 
+a:link{
+    color: rgb(228, 243, 13);
+}
+
+/* link ja visitat*/
+a:visited {
+    color: rgb(162, 167, 162);
+  }
+  
+  /* quan posem el ratolí sobre el link */
+  a:hover {
+    color: rgb(32, 241, 13);
+  }
+  
+  /* quan seleccionem el link */
+  a:active {
+    color: rgb(241, 13, 13);
+  }
+
+
 p {
     margin-bottom: 0.80rem;
     line-height: 1.4 rem;
@@ -62,7 +82,7 @@ footer {
 }
 
 .search:focus {
-    /*quan escrivim a buscar ciutat no ens apareix cap requadre*/
+    /*quan escrivim a buscar un pokemon no ens apareix cap requadre*/
     outline: none;
 }
 
