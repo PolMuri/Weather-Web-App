@@ -9,10 +9,16 @@
 }
 
 body {
+    /* a partir de position va lligat amb el footer perquè no es trepitgi amb les dades */
     font-family: 'Lato', sans-serif;
     background-color: var(--bg-color);
-    color: var(--text-color)
+    color: var(--text-color);
+    position:relative;
+    padding-bottom: 55px;
+    min-height: 90vh;
 }
+     
+
 
 a{
     color: rgb(124, 124, 247);
@@ -49,14 +55,14 @@ p1 {
 }
 
 footer {
-    /*que estigui sempre fixe a baix de tot, com ho volemd e centrat, com volem la línia,
+    /*que estigui sempre fixe a baix de tot i que no es trepitgi amb les dades
     etc*/
-    position: fixed;
     bottom: 0;
     padding: 20px;
     border-top: 1px solid grey;
     width: 100%;
     text-align: center;
+    position: absolute;
 }
 
 .search-form {
