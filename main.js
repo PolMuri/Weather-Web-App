@@ -15,6 +15,7 @@ const weather = document.getElementById('weather');
 const range = document.getElementById('range');
 const humidity = document.getElementById('humidity');
 const wind = document.getElementById('wind');
+const pressioAtmos = document.getElementById('pressioAtmos');
 
 
 //li passem l'id de search form
@@ -78,6 +79,7 @@ async function search(cityName) {
         range.innerHTML = `Temp mín/máx: ${(data.main.temp_min)}c / ${(data.main.temp_max)}c`;
         humidity.innerHTML = `Humitat: ${data.main.humidity}%`;
         wind.innerHTML = `Velocitat vent: ${data.wind.speed} Met./seg.`;
+        pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
        
        
         //basat en la temperatura, posem una imatge o una altra
@@ -86,7 +88,8 @@ async function search(cityName) {
         clearName(); 
     } catch (err) {
         console.log(err);
-        alert('HO SENTIM, hi ha hagut un ERROR!!')
+        //El missatge d'alerta que apareix a la pantalla/navegador quan algú posa dades incorrectes
+        alert('HI HA HAGUT UN ERROR! POSA UN NOM VÀLID!');
     }
 }
 
