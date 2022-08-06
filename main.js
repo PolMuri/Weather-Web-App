@@ -17,12 +17,12 @@ const humidity = document.getElementById('humidity');
 const wind = document.getElementById('wind');
 const pressioAtmos = document.getElementById('pressioAtmos');
 
-
 //li passem l'id de search form
 const searchform = document.getElementById('search-form');
 //volem obtenir l'informacio dels searchbox
 const searchbox = document.getElementById('searchbox');
 //a aquest form quan hi ha un event hi farem anar una funcio
+
 searchform.addEventListener('submit', onSubmit, true);
 
 //Creem la funcio de OnSubmit que rep un event
@@ -33,7 +33,7 @@ function onSubmit(event) {
     //posem la informació de dins el searchbox,és a dir, si escric barcelona i apreto, sortirà barcelona
     search(searchbox.value);
 }
-
+           
 //basat en la temperatura, posem una imatge o una altra
 function updateImages(data){
     const temp = (data.main.temp);
@@ -57,13 +57,45 @@ const clearName = () => {
     searchbox.value = "" ;
 }
 
-//funció que ens permetrà treure la informació de la api
+//a l'html hi ha l'onchange al select, que dirigeix a la funcio selectIdiom
+
+function selectIdiom() {
+    //extreiem per id del select (Llenguatges) les dades
+    //el .value és perquè són les dades de l'apartat value del select a l'html
+    //creo la variable idioma on hi guardo les dades del select-option-value
+    //ara les dades de dins el value de l'html les tinc a idioma
+    let idioma = document.getElementById("Llenguatges").value;
+
+//ara li passo idioma al switch(que com diu la variable guarden l'idioma tret de value)
+
+//creo la variable idiomaFetch,i li guardo un idioma o un altre per el fetch a l'hora de fer la crida de l'api
+//depenent del case que li arribi per idioma ( a idioma s'hi guarda el value del select, que
+// és el que posem al case)
+let idiomaFetch;
+switch (idioma) {
+  case 'Català':
+    idiomaFetch = 'ca'
+    break;
+
+    case 'Español':
+    idiomaFetch = 'es'
+    break;
+
+    case 'English':
+    idiomaFetch = 'en'
+    break;
+}
+return idiomaFetch;
+
+}
+
 async function search(cityName) {
+    
     try {
         //fetch per obtenir la informació
         //agafem la url per buscar, la q per buscar el pais o ciutat i a 
-        //part li passem la clau de l'api i el llenguatge que és espanyol, el fetch pot ser amb la url de la api només
-        const response = await fetch(`${api.url}?q=${cityName}&appid=${api.key}&lang=es&units=metric`);
+        //part li passem la clau de l'api i l'idioma amb la funcio selectIdiom(),
+        const response = await fetch(`${api.url}?q=${cityName}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
         
         //per obtenir la data
         const data = await response.json();
@@ -74,11 +106,11 @@ async function search(cityName) {
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
         date.innerHTML = (new Date()).toLocaleDateString();
-        temp.innerHTML = `${(data.main.temp)}c`;
+        temp.innerHTML = `${(data.main.temp)}º`;
         weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp mín/máx: ${(data.main.temp_min)}c / ${(data.main.temp_max)}c`;
-        humidity.innerHTML = `Humitat: ${data.main.humidity}%`;
-        wind.innerHTML = `Velocitat vent: ${data.wind.speed} Met./seg.`;
+        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)}c / ${(data.main.temp_max)}c`;
+        humidity.innerHTML = `Hum: ${data.main.humidity}%`;
+        wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
        
        
@@ -92,7 +124,7 @@ async function search(cityName) {
         alert('HI HA HAGUT UN ERROR! POSA UN NOM VÀLID!');
     }
 }
-
+    
 //convertim la temperatura a Celsius
 //funció que utilitzava quan no sabia que les dades de l'API ja es podien cridar en Celsius
 //function toCelsius (kelvin) {

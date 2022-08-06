@@ -17,7 +17,22 @@ body {
     padding-bottom: 55px;
     min-height: 90vh;
 }
-     
+  
+.custom-select{
+    position: relative;
+      
+}
+
+.custom-select select {
+    width: 7rem;
+    margin:1rem;
+    padding: 15px;
+    background-color: DodgerBlue; /*hide original SELECT element: */
+    border-radius: 7px;
+    border-color: white;
+    font-size: medium;
+    font-weight: bold;
+  }
 
 
 a{
