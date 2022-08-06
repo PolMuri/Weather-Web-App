@@ -24,9 +24,9 @@ body {
 }
 
 .custom-select select {
-    width: 7rem;
+    width: 6rem;
     margin:0.5rem;
-    padding: 13px;
+    padding: 7px;
     background-color: DodgerBlue; /*hide original SELECT element: */
     border-radius: 7px;
     border-color: white;
