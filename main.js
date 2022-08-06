@@ -75,14 +75,17 @@ let idiomaFetch;
 switch (idioma) {
   case 'Català':
     idiomaFetch = 'ca'
+    document.getElementById("searchbox").placeholder = "Busca una localitat: ";
     break;
 
     case 'Español':
     idiomaFetch = 'es'
+    document.getElementById("searchbox").placeholder = "Busca una localidad: ";
     break;
 
     case 'English':
     idiomaFetch = 'en'
+    document.getElementById("searchbox").placeholder = "Search for a location: ";
     break;
 }
 return idiomaFetch;
