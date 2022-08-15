@@ -92,7 +92,7 @@ function backImage(data) {
     if (backUrl == 'Thunderstorm') {
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
     } else if (backUrl == 'Clear') {
-        document.getElementById("card").style.backgroundImage = "url('images/sol.png')";
+        document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
     } else if (backUrl == 'Clouds') {
         document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
     } else if (backUrl == 'Drizzle') {

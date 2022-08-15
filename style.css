@@ -170,7 +170,7 @@ footer {
 .other-data{
     border-width: 3px;
     border-style: solid;
-    border-color: rgb(225, 241, 80);
+    border-color: var(--text-color);
     border-radius: 10px;
     padding:15px;
 }
