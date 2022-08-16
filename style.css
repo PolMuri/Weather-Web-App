@@ -119,6 +119,8 @@ footer {
 }
 
 .city{
+    /*break-word, perquè la paraula no surti del div */
+    word-wrap: break-word;
     font-size: 2.6rem;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
@@ -217,7 +219,7 @@ footer {
 
 @media only screen and (min-width: 900px) {
     .weather-card {
-        width: 600px;
+        width: 650px;
         margin: auto;
     }
 
