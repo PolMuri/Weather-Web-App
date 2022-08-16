@@ -119,9 +119,7 @@ function selectIdiom() {
     //creo la variable idioma on hi guardo les dades del select-option-value
     //ara les dades de dins el value de l'html les tinc a idioma
     let idioma = document.getElementById("Llenguatges").value;
-
     //ara li passo idioma al switch(que com diu la variable guarden l'idioma tret de value)
-
     //creo la variable idiomaFetch,i li guardo un idioma o un altre per el fetch a l'hora de fer la crida de l'api
     //depenent del case que li arribi per idioma ( a idioma s'hi guarda el value del select, que
     // és el que posem al case)
@@ -156,7 +154,6 @@ async function search(cityName) {
         //agafem la url per buscar, la q per buscar el pais o ciutat i a 
         //part li passem la clau de l'api i l'idioma amb la funcio selectIdiom(),
         const response = await fetch(`${api.url}?q=${cityName}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
-
         //per obtenir la data
         const data = await response.json();
         //amb l'id card fem que no surti el card amb la info fins que no busquem
@@ -173,9 +170,6 @@ async function search(cityName) {
         wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
         sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like}º`;
-
-
-
         //basat en la temperatura, posem una imatge o una altra
         //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
         updateImages(data);
@@ -186,7 +180,7 @@ async function search(cityName) {
     } catch (err) {
         console.log(err);
         //El missatge d'alerta que apareix a la pantalla/navegador quan algú posa dades incorrectes
-        alert('HI HA HAGUT UN ERROR! POSA UN NOM VÀLID!');
+        alert('POSA UN NOM VÀLID');
     }
 }
 
