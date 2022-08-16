@@ -217,7 +217,7 @@ footer {
     display: none;
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 768px) {
     .weather-card {
         width: 650px;
         margin: auto;
