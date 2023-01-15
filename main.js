@@ -18,6 +18,30 @@ const wind = document.getElementById('wind');
 const pressioAtmos = document.getElementById('pressioAtmos');
 const sensaTermi = document.getElementById('sensaTermi');
 const weatherImg = document.getElementById('weather-img');
+const weatherScript = document.getElementById('script');
+
+//EFECTE DE NEU
+//Això fa que s'afegixi un element script al document 
+//HTML amb les propietats especificades i la font de l'script extern. Bàsicament fa que el navegador carregui i executi 
+//l'script des de la font externa quan la pàgina estigui carregada.
+
+//appendChild() és un mètode de l'objecte Node en JavaScript que permet afegir un nou node com a darrer fill d'un node existent. 
+//Això significa que, en aquest cas, l'element script creat dinàmicament s'afegirà com a darrer fill de l'element que es passa com a paràmetre, 
+//que en aquest cas és el body del document. Això permet afegir elements dinàmicament al document HTML sense necessitat de 
+//modificar el codi HTML original. 
+
+//Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
+const script = document.createElement("script");
+//S'establix la propietat src de l'element script creat anteriorment a la url des d'on es carregarà l'script extern "https://app.embed.im/snow.js"
+script.src = "https://app.embed.im/snow.js";
+//S'establix la propietat className de l'element script creat anteriorment a "script"
+script.className = "script";
+//El mateix que abans amb la propietat id
+script.id = "script";
+//S'establix la propietat defer de l'element script creat anteriorment a true.
+script.defer = true;
+//S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
+document.body.appendChild(script);
 
 
 //li passem l'id de search form
@@ -70,7 +94,7 @@ function updateWeatherImage(data) {
     } else if (weatherIcon == 'Clear') {
         src = 'images/sun.png';
     } else if (weatherIcon == 'Clouds') {
-        src = 'images/clouds.png';
+        src = 'images/clouds.png'; 
     } else if (weatherIcon == 'Drizzle') {
         src = 'images/drizzle.png';
     } else if (weatherIcon == 'Rain') {
@@ -88,7 +112,7 @@ function updateWeatherImage(data) {
 function backImage(data) {
     //trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
     const backUrl = (data.weather[0].main);
-    //ara depenent del temps qeu faci tindrem una foto de background o una altra
+    //ara depenent del temps que faci tindrem una foto de background o una altra
     if (backUrl == 'Thunderstorm') {
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
     } else if (backUrl == 'Clear') {
@@ -106,6 +130,7 @@ function backImage(data) {
         document.getElementById("card").style.backgroundImage = "url('images/boira.png')";
     }
 }
+
 //natejem el nom de la ciutat buscada, així ho deixem llest per buscar la següent
 const clearName = () => {
     searchbox.value = "";
