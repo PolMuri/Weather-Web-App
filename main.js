@@ -30,19 +30,23 @@ const weatherScript = document.getElementById('script');
 //que en aquest cas és el body del document. Això permet afegir elements dinàmicament al document HTML sense necessitat de 
 //modificar el codi HTML original. 
 
-//Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
-const script = document.createElement("script");
-//S'establix la propietat src de l'element script creat anteriorment a la url des d'on es carregarà l'script extern "https://app.embed.im/snow.js"
-script.src = "https://app.embed.im/snow.js";
-//S'establix la propietat className de l'element script creat anteriorment a "script"
-script.className = "script";
-//El mateix que abans amb la propietat id
-script.id = "script";
-//S'establix la propietat defer de l'element script creat anteriorment a true.
-script.defer = true;
-//S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
-document.body.appendChild(script);
+//CREO LA FUNCIÖ PER POSAR PLUJA O NEU a mode d'animació
+function animacioNeu() {   
+    //ara depenent del temps que faci tindrem una animació o una altra
+    //Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
+    const script = document.createElement("script");
+    //S'establix la propietat src de l'element script creat anteriorment a la url des d'on es carregarà l'script extern "https://app.embed.im/snow.js"
+    script.src = "https://app.embed.im/snow.js";
+    //S'establix la propietat className de l'element script creat anteriorment a "script"
+    script.className = "script";
+    //El mateix que abans amb la propietat id
+    script.id = "script";
+    //S'establix la propietat defer de l'element script creat anteriorment a true.
+    script.defer = true;
+    //S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
+    document.body.appendChild(script);
 
+}
 
 //li passem l'id de search form
 const searchform = document.getElementById('search-form');
@@ -109,6 +113,29 @@ function updateWeatherImage(data) {
     weatherImg.src = src;
 }
 
+//Funció per eliminar l'animació de pluja quan no toca que hi sigui, eliminant tots els elements HR 
+//del document HTML creats per fer l'animació de pluja
+function eliminarPluja() {
+    //Declara una variable "elements" que conté tots els elements HR del document HTML 
+    //utilitzant el mètode "getElementsByTagName" de l'objecte "document" i passant com a paràmetre "hr"
+    let elements = document.getElementsByTagName("hr");
+    //Utilitza un bucle "while" per iterar mentre hi hagi elements HR en la variable "elements"
+    //A cada iteració del bucle, elimina l'element HR del document HTML utilitzant el mètode "removeChild" de 
+    //l'objecte parent de l'element HR (element[0].parentNode) i passant com a paràmetre l'element HR (elements[0]).
+    //El bucle torna a executar-se des de l'inici fins a que no quedi cap element HR en la variable "elements".
+    //Així s'eliminaria tots els elements HR del document HTML.
+    while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+}
+
+//no funciona
+/*function eliminarNeu() {
+    let script = document.getElementById("script");
+    script.parentNode.removeChild(script);
+}
+*/
+
 function backImage(data) {
     //trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
     const backUrl = (data.weather[0].main);
@@ -116,17 +143,58 @@ function backImage(data) {
     if (backUrl == 'Thunderstorm') {
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
     } else if (backUrl == 'Clear') {
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
     } else if (backUrl == 'Clouds') {
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
     } else if (backUrl == 'Drizzle') {
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
+        document.getElementById("card").style.backgroundImage = "url('images/pluja.png')"; 
+        //Per crear l'efecte de la pluja, necessito crear l'element hr a
+        //l'html que és l'element que tinc al CSS per la pluja, i el comptador inicialitzat a 100
+        let hrElement;
+        let comptador = 100;
+    
+        //Utilitza un bucle "for" per iterar des de 0 fins a al comptador (100)
+        //A cada iteració del bucle, crea un nou element HR utilitzant el mètode "createElement" del objecte "document" 
+        //i assigna-lo a la variable "hrElement"
+        //Assigna una posició aleatòria a l'element HR en la propietat "left" de l'estil de l'element HR utilitzant 
+        //un valor aleatori entre 0 i l'amplada de la finestra( window.innerWidth) i concatenant "px"
+        //Assigna una duració d'animació aleatòria a l'element HR en la propietat "animationDuration" de l'estil de l'element HR 
+        //utilitzant un valor aleatori entre 0.2 i 0.5 segons i concatenant "s"
+        //Assigna un retras d'animació aleatòria a l'element HR en la propietat "animationDelay" de l'estil de l'element HR 
+        //utilitzant un valor aleatori entre 0 i 5 segons i concatenant "s"
+    
+        for (let i = 0; i < comptador; i++) {
+            hrElement = document.createElement('HR');
+            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
+            hrElement.style.animationDelay = Math.random() * 5 + 's';
+            //Finalment, s'afegeix l'element HR al document HTML utilitzant el mètode "appendChild" del objecte "document.body"
+            //El bucle torna a executar-se des de l'inici fins a que s'han creat i afegit 100 elements HR al document.
+    
+            document.body.appendChild(hrElement);
+        }
     } else if (backUrl == 'Rain') {
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
+        let hrElement;
+        let comptador = 100;
+
+        for (let i = 0; i < comptador; i++) {
+            hrElement = document.createElement('HR'); 
+            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
+            hrElement.style.animationDelay = Math.random() * 5 + 's';
+           
+            document.body.appendChild(hrElement);
+        }
     } else if (backUrl == 'Snow') {
+        eliminarPluja();
+        animacioNeu();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
         //hi podria o hauria d'haver posat un else
     } else if (backUrl == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/boira.png')";
     }
 }
@@ -198,8 +266,8 @@ async function search(cityName) {
         //basat en la temperatura, posem una imatge o una altra
         //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
         updateImages(data);
-        updateWeatherImage(data)
-        backImage(data)
+        updateWeatherImage(data);
+        backImage(data);
         //natejem el nom de la ciutat buscada amb aquesta funció
         clearName();
     } catch (err) {
