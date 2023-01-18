@@ -30,24 +30,6 @@ const weatherScript = document.getElementById('script');
 //que en aquest cas és el body del document. Això permet afegir elements dinàmicament al document HTML sense necessitat de 
 //modificar el codi HTML original. 
 
-//CREO LA FUNCIÖ PER POSAR PLUJA O NEU a mode d'animació
-function animacioNeu() {   
-    //ara depenent del temps que faci tindrem una animació o una altra
-    //Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
-    const script = document.createElement("script");
-    //S'establix la propietat src de l'element script creat anteriorment a la url des d'on es carregarà l'script extern "https://app.embed.im/snow.js"
-    script.src = "https://app.embed.im/snow.js";
-    //S'establix la propietat className de l'element script creat anteriorment a "script"
-    script.className = "script";
-    //El mateix que abans amb la propietat id
-    script.id = "script";
-    //S'establix la propietat defer de l'element script creat anteriorment a true.
-    script.defer = true;
-    //S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
-    document.body.appendChild(script);
-
-}
-
 //li passem l'id de search form
 const searchform = document.getElementById('search-form');
 //volem obtenir l'informacio dels searchbox
@@ -98,7 +80,7 @@ function updateWeatherImage(data) {
     } else if (weatherIcon == 'Clear') {
         src = 'images/sun.png';
     } else if (weatherIcon == 'Clouds') {
-        src = 'images/clouds.png'; 
+        src = 'images/clouds.png';
     } else if (weatherIcon == 'Drizzle') {
         src = 'images/drizzle.png';
     } else if (weatherIcon == 'Rain') {
@@ -129,71 +111,160 @@ function eliminarPluja() {
     }
 }
 
-//no funciona
-/*function eliminarNeu() {
-    let script = document.getElementById("script");
-    script.parentNode.removeChild(script);
+//Funció per eliminar l'animació que genera la neu
+function eliminarNeu() {
+    let elements = document.getElementsByClassName("neu");
+    while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }
+
+
+/* NO FUNCIONA, ja que una vegada s'ha cridat i executat un script, no se'l pot parar/eliminar
+
+//CREO LA FUNCIÖ PER POSAR PLUJA O NEU a mode d'animació
+function animacioNeu() {   
+    //ara depenent del temps que faci tindrem una animació o una altra
+    //Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
+    const script = document.createElement("script");
+    //S'establix la propietat src de l'element script creat anteriorment a la url des d'on es carregarà l'script extern "https://app.embed.im/snow.js"
+    script.src = "https://app.embed.im/snow.js";
+    //S'establix la propietat className de l'element script creat anteriorment a "script"
+    script.className = "script";
+    //El mateix que abans amb la propietat id
+    script.id = "scriptNeu";
+    //S'establix la propietat defer de l'element script creat anteriorment a true.
+    script.defer = true;
+    //S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
+    document.body.appendChild(script);
+
+}
+
+function eliminarAnimacionNeu() {
+    const script = document.getElementById("scriptNeu");
+    document.body.removeChild(script);
+}
+
 */
+
 
 function backImage(data) {
     //trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
     const backUrl = (data.weather[0].main);
+    //La funció "eliminarAnimacionNeu()" només es crida si hi ha un element 
+    //amb l'id "scriptNeu" i s'eviten problemes amb la càrrega de la imatge de fons.
+    //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la neu
+
     //ara depenent del temps que faci tindrem una foto de background o una altra
     if (backUrl == 'Thunderstorm') {
+        eliminarNeu();
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
-    } else if (backUrl == 'Clear') {
-        eliminarPluja();
-        document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
-    } else if (backUrl == 'Clouds') {
-        eliminarPluja();
-        document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
-    } else if (backUrl == 'Drizzle') {
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.png')"; 
-        //Per crear l'efecte de la pluja, necessito crear l'element hr a
-        //l'html que és l'element que tinc al CSS per la pluja, i el comptador inicialitzat a 100
         let hrElement;
-        let comptador = 100;
-    
-        //Utilitza un bucle "for" per iterar des de 0 fins a al comptador (100)
-        //A cada iteració del bucle, crea un nou element HR utilitzant el mètode "createElement" del objecte "document" 
-        //i assigna-lo a la variable "hrElement"
-        //Assigna una posició aleatòria a l'element HR en la propietat "left" de l'estil de l'element HR utilitzant 
-        //un valor aleatori entre 0 i l'amplada de la finestra( window.innerWidth) i concatenant "px"
-        //Assigna una duració d'animació aleatòria a l'element HR en la propietat "animationDuration" de l'estil de l'element HR 
-        //utilitzant un valor aleatori entre 0.2 i 0.5 segons i concatenant "s"
-        //Assigna un retras d'animació aleatòria a l'element HR en la propietat "animationDelay" de l'estil de l'element HR 
-        //utilitzant un valor aleatori entre 0 i 5 segons i concatenant "s"
-    
+        let comptador = 10;
         for (let i = 0; i < comptador; i++) {
             hrElement = document.createElement('HR');
             hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
             hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
             hrElement.style.animationDelay = Math.random() * 5 + 's';
-            //Finalment, s'afegeix l'element HR al document HTML utilitzant el mètode "appendChild" del objecte "document.body"
-            //El bucle torna a executar-se des de l'inici fins a que s'han creat i afegit 100 elements HR al document.
-    
+
             document.body.appendChild(hrElement);
         }
+    } else if (backUrl == 'Clear') {
+        eliminarNeu();
+        eliminarPluja();
+        document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
+    } else if (backUrl == 'Clouds') {
+        eliminarNeu();
+        eliminarPluja();
+        document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
+    } else if (backUrl == 'Drizzle') {
+        eliminarNeu();
+        document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
+
+        //FUNCIÓ PER CREAR L'ANIMACIÓ DE PLUJA necessito crear l'element hr a
+        //l'html que és l'element que tinc al CSS per la pluja, i el comptador inicialitzat a 100
+        let hrElement;
+        let comptador = 10;
+        //Utilitza un bucle "for" per iterar des de 0 fins a al comptador (60)
+        for (let i = 0; i < comptador; i++) {
+            //A cada iteració del bucle, crea un nou element HR utilitzant el mètode "createElement" del objecte "document" 
+            //i assigna-lo a la variable "hrElement". HR en referència a que representa una línia horitzontal(com la pluja)
+            hrElement = document.createElement('pluja');
+            //Assigna una posició aleatòria a l'element HR en la propietat "left" de l'estil de l'element HR utilitzant 
+            //un valor aleatori entre 0 i l'amplada de la finestra( window.innerWidth) i concatenant "px"
+            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            //Assigna una duració d'animació aleatòria a l'element HR en la propietat "animationDuration" de l'estil de l'element HR 
+            //utilitzant un valor aleatori entre 0.2 i 0.5 segons i concatenant "s"
+            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
+            //Assigna un retras d'animació aleatòria a l'element HR en la propietat "animationDelay" de l'estil de l'element HR 
+            //utilitzant un valor aleatori entre 0 i 5 segons i concatenant "s"
+            hrElement.style.animationDelay = Math.random() * 5 + 's';
+            //Finalment, s'afegeix l'element HR al document HTML utilitzant el mètode "appendChild" del objecte "document.body"
+            //El bucle torna a executar-se des de l'inici fins a que s'han creat i afegit 100 elements HR al document.
+            document.body.appendChild(hrElement);
+        }
+
     } else if (backUrl == 'Rain') {
+        eliminarNeu();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
         let hrElement;
-        let comptador = 100;
-
+        let comptador = 10;
         for (let i = 0; i < comptador; i++) {
-            hrElement = document.createElement('HR'); 
+            hrElement = document.createElement('HR');
             hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
             hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
             hrElement.style.animationDelay = Math.random() * 5 + 's';
-           
             document.body.appendChild(hrElement);
         }
+
     } else if (backUrl == 'Snow') {
         eliminarPluja();
-        animacioNeu();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
+        //FUNCIÓ CREACIÓ DE NEU
+        //Crea 15 flocs de neu que apareixen en una posició aleatòria de la pantalla, 
+        //amb una animació de caure i una duració i delay aleatori, i una vegada finalitza la animació es crea un de nou.
+
+        //La primera línia declara una variable "neuElement" que es utilitzarà per crear cada 
+        //element DIV que representarà un floc de neu.
+        let neuElement;
+        //És la quantitat de flocs de neu que es crearan.
+        let comptador = 15;
+
+        //Funció que crea cada floc de neu
+        function crearFlocNeu() {
+            //Es crea un element DIV utilitzant el mètode "createElement" de l'objecte "document" i passant com a paràmetre "DIV".
+            neuElement = document.createElement('DIV');
+            //Utilitzant el mètode "classList.add" s'afegeix la classe "neu" a l'element DIV creat anteriorment.
+            neuElement.classList.add('neu');
+            //Utilitzant l'objecte style es assigna una posició aleatòria en l'eix x i en l'eix y a l'element DIV.
+            neuElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            neuElement.style.top = Math.floor(Math.random() * window.innerHeight) + 'px';
+            //Utilitzant l'objecte l'style es defineix l'animació que es farà sobre 
+            //l'element DIV, en aquest cas es defineix l'animació "caureNeu" que s'ha de definir en el CSS (@keyframes)
+            neuElement.style.animationName = 'caureNeu';
+            //Utilitzo l'style per definir la duració d'animació entre 5s i 10s i un delay entre 0s i 5s.
+            neuElement.style.animationDuration = (5 + Math.random() * 5) + 's';
+            neuElement.style.animationDelay = Math.random() * 5 + 's';
+            //Afegint un event listener al element DIV, es detecta quan l'animació finalitza, 
+            //esborrant així l'element i creant un de nou.
+            neuElement.addEventListener('animationend', function () {
+                this.remove();
+                crearFlocNeu();
+            });
+            //Finalment s'afegeix l'element DIV al document HTML 
+            //utilitzant el mètode "appendChild" de l'objecte "body" i passant com a paràmetre l'element DIV.
+            document.body.appendChild(neuElement);
+        }
+
+        //La segona part del codi és un bucle "for" que executa la funció "crearFlocNeu" 15 vegades 
+        //( el valor del comptador en aquest cas concret)
+        for (let i = 0; i < comptador; i++) {
+            crearFlocNeu();
+        }
+
         //hi podria o hauria d'haver posat un else
     } else if (backUrl == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
+        eliminarNeu();
         eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/boira.png')";
     }
