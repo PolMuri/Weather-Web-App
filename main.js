@@ -189,7 +189,7 @@ function backImage(data) {
         for (let i = 0; i < comptador; i++) {
             //A cada iteració del bucle, crea un nou element HR utilitzant el mètode "createElement" del objecte "document" 
             //i assigna-lo a la variable "hrElement". HR en referència a que representa una línia horitzontal(com la pluja)
-            hrElement = document.createElement('pluja');
+            hrElement = document.createElement('HR');
             //Assigna una posició aleatòria a l'element HR en la propietat "left" de l'estil de l'element HR utilitzant 
             //un valor aleatori entre 0 i l'amplada de la finestra( window.innerWidth) i concatenant "px"
             hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
