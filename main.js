@@ -159,14 +159,31 @@ function backImage(data) {
     if (backUrl == 'Thunderstorm') {
         eliminarNeu();
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
+        //ANIMACIÓ DE PLUJA EXPLICADA
+        //Es crea una variable anomenada "hrElement" per a ser utilitzada per a crear cada gota de pluja.
         let hrElement;
+        //Es crea una variable anomenada "comptador" i es defineix com 10.
+        //Aquesta variable es utilitza per a determinar quantes gotes de pluja es crearan.
         let comptador = 10;
+        //Es crea una variable anomenada "espaiament" i es defineix com la amplada de la 
+        //finestra del navegador dividit pel comptador. Aquesta variable es utilitzada per 
+        //a determinar l'espai entre cada gota de pluja.
+        let espaiament = window.innerWidth / comptador;
+        //Es crea un bucle "for" que itera fins a quan i és més petit que el comptador.
         for (let i = 0; i < comptador; i++) {
+            //Dins del bucle, es crea una nova gota de pluja utilitzant la variable 
+            //"hrElement" i es fa servir el mètode "createElement" per crear un element HR.
             hrElement = document.createElement('HR');
-            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
-            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
-            hrElement.style.animationDelay = Math.random() * 5 + 's';
-
+            //S'estableix la posició de la gota de pluja en l'eix X utilitzant la variable 
+            //"espaiament" per calcular la posició correcta.
+            hrElement.style.left = (i * espaiament) + 'px';
+            //S'estableix la durada de l'animació de la gota de pluja utilitzant la 
+            //funció "Math.random" per generar un valor aleatori entre 0,3 i 0,6 segons.
+            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            //Per canviar la durada de l'animació, si la vull fer més ràpida haig de baixar els valors de
+            //animationDuration i pujar els de animationDelay
+            hrElement.style.animationDelay = Math.random() * 4 + 's';
+            //S'afegeix l'element "HR" al document mitjançant el mètode "appendChild".
             document.body.appendChild(hrElement);
         }
     } else if (backUrl == 'Clear') {
@@ -180,27 +197,14 @@ function backImage(data) {
     } else if (backUrl == 'Drizzle') {
         eliminarNeu();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
-
-        //FUNCIÓ PER CREAR L'ANIMACIÓ DE PLUJA necessito crear l'element hr a
-        //l'html que és l'element que tinc al CSS per la pluja, i el comptador inicialitzat a 100
         let hrElement;
         let comptador = 10;
-        //Utilitza un bucle "for" per iterar des de 0 fins a al comptador (60)
+        let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            //A cada iteració del bucle, crea un nou element HR utilitzant el mètode "createElement" del objecte "document" 
-            //i assigna-lo a la variable "hrElement". HR en referència a que representa una línia horitzontal(com la pluja)
             hrElement = document.createElement('HR');
-            //Assigna una posició aleatòria a l'element HR en la propietat "left" de l'estil de l'element HR utilitzant 
-            //un valor aleatori entre 0 i l'amplada de la finestra( window.innerWidth) i concatenant "px"
-            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
-            //Assigna una duració d'animació aleatòria a l'element HR en la propietat "animationDuration" de l'estil de l'element HR 
-            //utilitzant un valor aleatori entre 0.2 i 0.5 segons i concatenant "s"
-            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
-            //Assigna un retras d'animació aleatòria a l'element HR en la propietat "animationDelay" de l'estil de l'element HR 
-            //utilitzant un valor aleatori entre 0 i 5 segons i concatenant "s"
-            hrElement.style.animationDelay = Math.random() * 5 + 's';
-            //Finalment, s'afegeix l'element HR al document HTML utilitzant el mètode "appendChild" del objecte "document.body"
-            //El bucle torna a executar-se des de l'inici fins a que s'han creat i afegit 100 elements HR al document.
+            hrElement.style.left = (i * espaiament) + 'px';
+            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            hrElement.style.animationDelay = Math.random() * 4 + 's';
             document.body.appendChild(hrElement);
         }
 
@@ -209,18 +213,19 @@ function backImage(data) {
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
         let hrElement;
         let comptador = 10;
+        let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
             hrElement = document.createElement('HR');
-            hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
-            hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + 's';
-            hrElement.style.animationDelay = Math.random() * 5 + 's';
+            hrElement.style.left = (i * espaiament) + 'px';
+            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            hrElement.style.animationDelay = Math.random() * 4 + 's';
             document.body.appendChild(hrElement);
         }
 
     } else if (backUrl == 'Snow') {
         eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
-        //FUNCIÓ CREACIÓ DE NEU
+        //FUNCIÓ CREACIÓ ANIMACIÓ DE NEU EXPLICADA
         //Crea 15 flocs de neu que apareixen en una posició aleatòria de la pantalla, 
         //amb una animació de caure i una duració i delay aleatori, i una vegada finalitza la animació es crea un de nou.
 
