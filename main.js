@@ -158,6 +158,9 @@ function backImage(data) {
     //ara depenent del temps que faci tindrem una foto de background o una altra
     if (backUrl == 'Thunderstorm') {
         eliminarNeu();
+        //Perquè no es solapin les animacions de pluja si es van buscant llocs
+        // de forma consecutiva a on plogui, elimino l'animació de neu sempre, i després la creo
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
         //ANIMACIÓ DE PLUJA EXPLICADA
         //Es crea una variable anomenada "hrElement" per a ser utilitzada per a crear cada gota de pluja.
@@ -196,6 +199,7 @@ function backImage(data) {
         document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
     } else if (backUrl == 'Drizzle') {
         eliminarNeu();
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
         let hrElement;
         let comptador = 10;
@@ -210,6 +214,7 @@ function backImage(data) {
 
     } else if (backUrl == 'Rain') {
         eliminarNeu();
+        eliminarPluja();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
         let hrElement;
         let comptador = 10;
@@ -332,13 +337,13 @@ async function search(cityName) {
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
         date.innerHTML = (new Date()).toLocaleDateString();
-        temp.innerHTML = `${(data.main.temp)}º`;
+        temp.innerHTML = `${(data.main.temp)} ºC`;
         weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)}c / ${(data.main.temp_max)}c`;
+        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
         humidity.innerHTML = `Hum: ${data.main.humidity}%`;
         wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
-        sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like}º`;
+        sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
         //basat en la temperatura, posem una imatge o una altra
         //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
         updateImages(data);
