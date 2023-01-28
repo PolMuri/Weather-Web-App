@@ -229,6 +229,7 @@ function backImage(data) {
 
     } else if (backUrl == 'Snow') {
         eliminarPluja();
+        eliminarNeu();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
         //FUNCIÓ CREACIÓ ANIMACIÓ DE NEU EXPLICADA
         //Crea 15 flocs de neu que apareixen en una posició aleatòria de la pantalla, 
@@ -253,8 +254,8 @@ function backImage(data) {
             //l'element DIV, en aquest cas es defineix l'animació "caureNeu" que s'ha de definir en el CSS (@keyframes)
             neuElement.style.animationName = 'caureNeu';
             //Utilitzo l'style per definir la duració d'animació entre 5s i 10s i un delay entre 0s i 5s.
-            neuElement.style.animationDuration = (5 + Math.random() * 5) + 's';
-            neuElement.style.animationDelay = Math.random() * 5 + 's';
+            neuElement.style.animationDuration = (20 + Math.random() * 5) + 's';
+            neuElement.style.animationDelay = Math.random() * 43 + 's';
             //Afegint un event listener al element DIV, es detecta quan l'animació finalitza, 
             //esborrant així l'element i creant un de nou.
             neuElement.addEventListener('animationend', function () {
