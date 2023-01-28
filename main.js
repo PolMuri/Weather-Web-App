@@ -239,7 +239,7 @@ function backImage(data) {
         //element DIV que representarà un floc de neu.
         let neuElement;
         //És la quantitat de flocs de neu que es crearan.
-        let comptador = 15;
+        let comptador = 28;
 
         //Funció que crea cada floc de neu
         function crearFlocNeu() {
@@ -254,8 +254,7 @@ function backImage(data) {
             //l'element DIV, en aquest cas es defineix l'animació "caureNeu" que s'ha de definir en el CSS (@keyframes)
             neuElement.style.animationName = 'caureNeu';
             //Utilitzo l'style per definir la duració d'animació entre 5s i 10s i un delay entre 0s i 5s.
-            neuElement.style.animationDuration = (20 + Math.random() * 5) + 's';
-            neuElement.style.animationDelay = Math.random() * 43 + 's';
+            neuElement.style.animationDuration = (13 + Math.random() * 90) + 's';
             //Afegint un event listener al element DIV, es detecta quan l'animació finalitza, 
             //esborrant així l'element i creant un de nou.
             neuElement.addEventListener('animationend', function () {
@@ -265,6 +264,7 @@ function backImage(data) {
             //Finalment s'afegeix l'element DIV al document HTML 
             //utilitzant el mètode "appendChild" de l'objecte "body" i passant com a paràmetre l'element DIV.
             document.body.appendChild(neuElement);
+          
         }
 
         //La segona part del codi és un bucle "for" que executa la funció "crearFlocNeu" 15 vegades 
