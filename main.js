@@ -1,3 +1,4 @@
+
 const api = {
     //la clau que ens han donat i la url de la api
     key: '1e424e189616344992363ad081adfbe6',
@@ -19,11 +20,6 @@ const pressioAtmos = document.getElementById('pressioAtmos');
 const sensaTermi = document.getElementById('sensaTermi');
 const weatherImg = document.getElementById('weather-img');
 const weatherScript = document.getElementById('script');
-
-//EFECTE DE NEU
-//Això fa que s'afegixi un element script al document 
-//HTML amb les propietats especificades i la font de l'script extern. Bàsicament fa que el navegador carregui i executi 
-//l'script des de la font externa quan la pàgina estigui carregada.
 
 //appendChild() és un mètode de l'objecte Node en JavaScript que permet afegir un nou node com a darrer fill d'un node existent. 
 //Això significa que, en aquest cas, l'element script creat dinàmicament s'afegirà com a darrer fill de l'element que es passa com a paràmetre, 
@@ -321,6 +317,73 @@ function selectIdiom() {
     return idiomaFetch;
 
 }
+
+//options: és un objecte que conté les opcions per a la funció 
+const options = {
+    //indica si s'ha d'utilitzar una alta precisió (true) o no (false)
+    enableHighAccuracy: true,
+    //timeout indica el temps en mil·lisegons que esperarà per obtenir les dades de geolocalització. 
+    timeout: 5000,
+    //maximumAge indica la quantitat de temps en mil·lisegons que es pot retornar les dades de geolocalització que s'han obtingut previament.
+    maximumAge: 0
+  };
+
+  //getLocationSuccess: aquesta funció és cridada si s'obtenen les dades de geolocalització amb èxit. 
+  //L'argument de la funció és un objecte pos que conté les dades de geolocalització, incloent les coordenades de latitud i longitud.
+  function getLocationSuccess(pos) {
+    const crd = pos.coords;
+    //Per consola es mostren les dades també 
+    console.log('Your current position is:');
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
+  }
+  
+  //error: aquesta funció és cridada si hi ha un error en obtenir les dades de geolocalització. L'argument de la funció és un 
+  //objecte err que conté informació sobre l'error.
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  //L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
+  //un event listener al botó amb id "getLocation". Quan l'usuari cliqui aquest botó, es cridarà la funció navigator.geolocation.getCurrentPosition 
+  //amb les opcions especificades a options, les funcions success i error com a arguments, i es passaran les dades obtingudes a la funció success.
+  document.getElementById("getLocation").addEventListener("click", function() {
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  });
+
+async function success(pos) {
+        
+        //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        //la mateixa crida a la api que a la funció d'abaix, però en comptes d'extreure les dades per nom de població, es fa per geolocalització (latitud i longitud)
+        const response = await fetch(`${api.url}?lat=${lat}&lon=${lon}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
+        const data = await response.json();
+        //amb l'id card fem que no surti el card amb la info fins que no busquem
+        //la primera ciutat
+        card.style.display = 'block';
+        //per assegurarnos que la data està sent passada
+        //anem a remplaçar les dades que tenim per les que ens dona la api
+        city.innerHTML = `${data.name}, ${data.sys.country}`;
+        date.innerHTML = (new Date()).toLocaleDateString();
+        temp.innerHTML = `${(data.main.temp)} ºC`;
+        weather.innerHTML = data.weather[0].description;
+        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+        humidity.innerHTML = `Hum: ${data.main.humidity}%`;
+        wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
+        pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
+        sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
+        //basat en la temperatura, posem una imatge o una altra
+        //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
+        updateImages(data);
+        updateWeatherImage(data);
+        backImage(data);
+        //natejem el nom de la ciutat buscada amb aquesta funció
+        clearName();
+}
+
+
 
 async function search(cityName) {
 
