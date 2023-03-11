@@ -62,7 +62,7 @@ function updateImages(data) {
     tempImg.src = src;
 }
 
-//depenent del temps que faci, posem una imatge o una altra
+//depenent del temps que faci, posem una imatge o una altra com a icone que acompanya l'estat del temps
 function updateWeatherImage(data) {
     //les dades tretes d'aquí, que em doenn les categories generals del temps
     //i hi veig si és categoria de pluja, núvols , etc per posar l'icone corresponent
@@ -86,7 +86,7 @@ function updateWeatherImage(data) {
         //hi podria o hauria d'haver posat un else
     } else if (weatherIconID == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
         src = 'images/foggy.png';
-    }
+    } 
     //m'injecta la imatge aquí de l'HTML, que és weather.img per el seu ID
     weatherImg.src = src;
 }
@@ -147,6 +147,10 @@ function eliminarAnimacionNeu() {
 function backImage(data) {
     //trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
     const backUrl = (data.weather[0].main);
+    const backUrlId = (data.weather[0].id);
+    //dic que el color del text és blanc (el mateix que al CSS), així quan s'entra a l'if de Clouds i a dins a l'if de l'ID 801
+    //i es canvia el color del text al negre, al anar a dins d'un altre if el color del text torna al blanc com correspón
+    document.getElementById("card").style.color = "rgb(224, 224, 230";
     //La funció "eliminarAnimacionNeu()" només es crida si hi ha un element 
     //amb l'id "scriptNeu" i s'eviten problemes amb la càrrega de la imatge de fons.
     //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la neu
@@ -192,7 +196,14 @@ function backImage(data) {
     } else if (backUrl == 'Clouds') {
         eliminarNeu();
         eliminarPluja();
+        //Si l'id del temps és el següent vol dir que hi ha pocs núvols (few clouds: 11-25%) i per tant poso una imatge que es correspongui
+        if (backUrlId == 801) {
+            document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.png')";
+            //Pinto el text de color negre perquè es vegi bé amb aquesta imatge
+            document.getElementById("card").style.color = "black";
+        } else {
         document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
+        }
     } else if (backUrl == 'Drizzle') {
         eliminarNeu();
         eliminarPluja();
