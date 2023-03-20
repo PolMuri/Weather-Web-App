@@ -200,11 +200,11 @@ function backImage(data) {
         if (backUrlId == 801) {
             document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.png')";
             //Pinto el text de color negre perquè es vegi bé amb aquesta imatge
-            document.getElementById("card").style.color = "black";
+            document.getElementById("card").style.color = "#01081d";
             //Núvols del 26-50%
         } else if (backUrlId == 802) {
             document.getElementById("card").style.backgroundImage = "url('images/nuvolositat variable.png')";
-            document.getElementById("card").style.color = "black";
+            document.getElementById("card").style.color = "#01081d";
         } else {
         document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
         }
