@@ -17,9 +17,11 @@ const range = document.getElementById('range');
 const humidity = document.getElementById('humidity');
 const wind = document.getElementById('wind');
 const pressioAtmos = document.getElementById('pressioAtmos');
-const sensaTermi = document.getElementById('sensaTermi');
+//ara mateix no utilizo la sensació tèrmica
+//const sensaTermi = document.getElementById('sensaTermi');
 const weatherImg = document.getElementById('weather-img');
 const weatherScript = document.getElementById('script');
+const sunRiseSet = document.getElementById('sunRiseSet');
 
 //appendChild() és un mètode de l'objecte Node en JavaScript que permet afegir un nou node com a darrer fill d'un node existent. 
 //Això significa que, en aquest cas, l'element script creat dinàmicament s'afegirà com a darrer fill de l'element que es passa com a paràmetre, 
@@ -86,7 +88,7 @@ function updateWeatherImage(data) {
         //hi podria o hauria d'haver posat un else
     } else if (weatherIconID == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
         src = 'images/foggy.png';
-    } 
+    }
     //m'injecta la imatge aquí de l'HTML, que és weather.img per el seu ID
     weatherImg.src = src;
 }
@@ -206,7 +208,7 @@ function backImage(data) {
             document.getElementById("card").style.backgroundImage = "url('images/nuvolositat variable.png')";
             document.getElementById("card").style.color = "#01081d";
         } else {
-        document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
+            document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
         }
     } else if (backUrl == 'Drizzle') {
         eliminarNeu();
@@ -275,7 +277,7 @@ function backImage(data) {
             //Finalment s'afegeix l'element DIV al document HTML 
             //utilitzant el mètode "appendChild" de l'objecte "body" i passant com a paràmetre l'element DIV.
             document.body.appendChild(neuElement);
-          
+
         }
 
         //La segona part del codi és un bucle "for" que executa la funció "crearFlocNeu" 15 vegades 
@@ -312,7 +314,7 @@ function selectIdiom() {
     let idiomaFetch;
     switch (idioma) {
         case 'Català':
-            idiomaFetch = 'ca'
+            idiomaFetch = 'ca';
             //Agafo l'element amb l'id searchbox (que és el buscador), accedeixo a .placeholder 
             //(el .placeholder és una propietat de l'objecte input en HTML que es pot accedir i modificar mitjançant JavaScript. 
             //Amb aquesta propietat es pot canviar el text que apareix dins d'un quadre d'entrada quan aquest està buit i no s'ha escrit encara cap valor)
@@ -324,7 +326,7 @@ function selectIdiom() {
             break;
 
         case 'Español':
-            idiomaFetch = 'es'
+            idiomaFetch = 'es';
             //He decidit utilitzar aquesta sintaxi, però també es podria utilitzar: document.getElementById("searchbox").setAttribute("placeholder", "Busca una localidad: ");
             //a sintaxi .setAttribute("placeholder", "Busca una localidad: ") és una manera més general d'afegir o modificar atributs en un element HTML a través de JavaScript. 
             //Significa que es pot utilitzar per a qualsevol atribut, no només per a "placeholder". Per contra, la sintaxi .placeholder = "Busca una localidad: " és una forma més 
@@ -335,7 +337,7 @@ function selectIdiom() {
             break;
 
         case 'English':
-            idiomaFetch = 'en'
+            idiomaFetch = 'en';
             document.getElementById("searchbox").placeholder = "Search for a location: ";
             document.getElementById("footerText").innerHTML = "Created by <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             break;
@@ -352,61 +354,110 @@ const options = {
     timeout: 5000,
     //maximumAge indica la quantitat de temps en mil·lisegons que es pot retornar les dades de geolocalització que s'han obtingut previament.
     maximumAge: 0
-  };
+};
 
-  //getLocationSuccess: aquesta funció és cridada si s'obtenen les dades de geolocalització amb èxit. 
-  //L'argument de la funció és un objecte pos que conté les dades de geolocalització, incloent les coordenades de latitud i longitud.
-  function getLocationSuccess(pos) {
+//getLocationSuccess: aquesta funció és cridada si s'obtenen les dades de geolocalització amb èxit. 
+//L'argument de la funció és un objecte pos que conté les dades de geolocalització, incloent les coordenades de latitud i longitud.
+function getLocationSuccess(pos) {
     const crd = pos.coords;
     //Per consola es mostren les dades també 
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
-  }
-  
-  //error: aquesta funció és cridada si hi ha un error en obtenir les dades de geolocalització. L'argument de la funció és un 
-  //objecte err que conté informació sobre l'error.
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
+}
 
-  //L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
-  //un event listener al botó amb id "getLocation". Quan l'usuari cliqui aquest botó, es cridarà la funció navigator.geolocation.getCurrentPosition 
-  //amb les opcions especificades a options, les funcions success i error com a arguments, i es passaran les dades obtingudes a la funció success.
-  document.getElementById("getLocation").addEventListener("click", function() {
+//error: aquesta funció és cridada si hi ha un error en obtenir les dades de geolocalització. L'argument de la funció és un 
+//objecte err que conté informació sobre l'error.
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+//L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
+//un event listener al botó amb id "getLocation". Quan l'usuari cliqui aquest botó, es cridarà la funció navigator.geolocation.getCurrentPosition 
+//amb les opcions especificades a options, les funcions success i error com a arguments, i es passaran les dades obtingudes a la funció success.
+document.getElementById("getLocation").addEventListener("click", function () {
     navigator.geolocation.getCurrentPosition(success, error, options);
-  });
+});
+
+//La funció formatSunRiseSetHour accepta dos arguments: sunrise i sunset
+function formatSunRiseSetHour(sunrise, sunset) {
+    //sunriseTime i sunsetTime són variables creades per emmagatzemar el valor dels arguments sunrise i sunset convertits a objectes de data.
+    //La multiplicació per 1000 converteix el temps Unix a mil·lisegons, que és el format que utilitza el constructor de Date() per crear un objecte de data. 
+    //Per tant aquí la variable const sunriseTime = new Date(sunrise * 1000); crea un objecte de data a partir del valor de sunrise que està en format Unix Time(convertit a mil·lisegons)
+    const sunriseTime = new Date(sunrise * 1000);
+    const sunsetTime = new Date(sunset * 1000);
+
+    //Les variables formattedSunrise i formattedSunset es declaren per emmagatzemar les hores de sortida del sol i posta del sol formatades.
+    let formattedSunrise, formattedSunset;
+        //les hores formatades s'assignen utilitzant el mètode toLocaleTimeString() de l'objecte de data,
+        //que formata l'hora segons les convencions d'idioma i regió de l'usuari.
+        formattedSunrise = `${sunriseTime.toLocaleTimeString()} h`;
+        formattedSunset = `${sunsetTime.toLocaleTimeString()} h`;
+ 
+
+    return {
+        //La funció retorna un objecte que conté les propietats formattedSunrise i formattedSunset que contenen les hores formatades de sortida del sol i posta del sol, respectivament.
+        formattedSunrise,
+        formattedSunset
+    }
+}
+
 
 async function success(pos) {
-        
-        //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
-        //la mateixa crida a la api que a la funció d'abaix, però en comptes d'extreure les dades per nom de població, es fa per geolocalització (latitud i longitud)
-        const response = await fetch(`${api.url}?lat=${lat}&lon=${lon}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
-        const data = await response.json();
-        //amb l'id card fem que no surti el card amb la info fins que no busquem
-        //la primera ciutat
-        card.style.display = 'block';
-        //per assegurarnos que la data està sent passada
-        //anem a remplaçar les dades que tenim per les que ens dona la api
-        city.innerHTML = `${data.name}, ${data.sys.country}`;
-        date.innerHTML = (new Date()).toLocaleDateString();
-        temp.innerHTML = `${(data.main.temp)} ºC`;
-        weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
-        humidity.innerHTML = `Hum: ${data.main.humidity}%`;
-        wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
-        pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
-        sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
-        //basat en la temperatura, posem una imatge o una altra
-        //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
-        updateImages(data);
-        updateWeatherImage(data);
-        backImage(data);
-        //natejem el nom de la ciutat buscada amb aquesta funció
-        clearName();
+
+    //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+    //la mateixa crida a la api que a la funció d'abaix, però en comptes d'extreure les dades per nom de població, es fa per geolocalització (latitud i longitud)
+    const response = await fetch(`${api.url}?lat=${lat}&lon=${lon}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
+    const data = await response.json();
+    //amb l'id card fem que no surti el card amb la info fins que no busquem
+    //la primera ciutat
+    card.style.display = 'block';
+    //per assegurarnos que la data està sent passada
+    //anem a remplaçar les dades que tenim per les que ens dona la api
+    city.innerHTML = `${data.name}, ${data.sys.country}`;
+    date.innerHTML = (new Date()).toLocaleDateString();
+    temp.innerHTML = `${(data.main.temp)} ºC`;
+    weather.innerHTML = data.weather[0].description;
+    range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+    humidity.innerHTML = `Hum: ${data.main.humidity}%`;
+    wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
+    pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
+    //Ara mateix no utilitzo la sensació tèrmica
+    //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
+
+    //primer declaro la variable idiomSun (amb el let ja que el seu valor es pot modificar posteriorment) que tindra el resultat que retorna la funció selectIdiom()
+    let idiomSun = selectIdiom();
+    //depenent de l'idioma que em retorni la funció selectIdiom escric quan surt i es pon el sol en un idioma o un altre
+    if (idiomSun === 'ca') {
+        //s'envien els valors data.sys.sunrise, data.sys.sunset a la funció formatSunRiseSetHour, aquesta processa aquests valors en format UNIX que contenen
+        //la hora en que surt i es pon el sol, i la mateixa funció amb el .formattedSunrise o .formattedSunset retorna el valor caluclat en la funció formatSunRiseSetHour
+        //que serà o bé la hora en que surt o es pon el sol en format comprensible (hores normals)
+        //com es pot veure S'utilitza la notació de punt per accedir a les propietats formattedSunrise i formattedSunset de l'objecte retornat, 
+        //que contenen les cadenes formatejades corresponents a l'hora que surt el sol i quan es pon, respectivament.
+        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+
+    } else if (idiomSun === 'es') {
+        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> El amanecer a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+    } else {
+        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is at: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is at:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+    }
+
+    //basat en la temperatura, posem una imatge o una altra
+    //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
+    updateImages(data);
+    updateWeatherImage(data);
+    backImage(data);
+    //natejem el nom de la ciutat buscada amb aquesta funció
+    clearName();
 }
 
 
@@ -433,7 +484,22 @@ async function search(cityName) {
         humidity.innerHTML = `Hum: ${data.main.humidity}%`;
         wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
-        sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
+        //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
+        let idiomSun = selectIdiom();
+        if (idiomSun === 'ca') {
+            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+        } else if (idiomSun === 'es') {
+            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> El amanecer a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+        } else {
+            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is at: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is at:
+            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
+        }
+
         //basat en la temperatura, posem una imatge o una altra
         //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
         updateImages(data);
