@@ -442,12 +442,12 @@ async function success(pos) {
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
 
     } else if (idiomSun === 'es') {
-        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> El amanecer a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
     } else {
-        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is at: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is at:
+        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
     }
 
@@ -491,7 +491,7 @@ async function search(cityName) {
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
         } else if (idiomSun === 'es') {
-            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> El amanecer a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
+            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
         } else {
