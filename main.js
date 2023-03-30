@@ -421,7 +421,7 @@ async function success(pos) {
     date.innerHTML = (new Date()).toLocaleDateString();
     temp.innerHTML = `${(data.main.temp)} ºC`;
     weather.innerHTML = data.weather[0].description;
-    range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+    range.innerHTML = `Temp min/max: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
     humidity.innerHTML = `Hum: ${data.main.humidity}%`;
     wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
     pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
@@ -480,7 +480,7 @@ async function search(cityName) {
         date.innerHTML = (new Date()).toLocaleDateString();
         temp.innerHTML = `${(data.main.temp)} ºC`;
         weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp min/mx: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+        range.innerHTML = `Temp min/max: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
         humidity.innerHTML = `Hum: ${data.main.humidity}%`;
         wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
