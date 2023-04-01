@@ -105,6 +105,9 @@ function eliminarPluja() {
     //El bucle torna a executar-se des de l'inici fins a que no quedi cap element HR en la variable "elements".
     //Així s'eliminaria tots els elements HR del document HTML.
     while (elements.length > 0) {
+        //A cada iteració del while, l'element que es vol eliminar és sempre l'element que ocupa la primera posició. 
+        //Això permet recórrer tots els elements de la llista, ja que a mesura que es van eliminant, 
+        //la resta d'elements es mouen cap a l'esquerra i la següent iteració del bucle processa l'element següent que ara es troba a la primera posició de la llista.
         elements[0].parentNode.removeChild(elements[0]);
     }
 }
