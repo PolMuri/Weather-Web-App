@@ -42,6 +42,9 @@ function onSubmit(event) {
     //redenderització de la pàgina quan perdem el submit
     event.preventDefault();
     //posem la informació de dins el searchbox,és a dir, si escric barcelona i apreto, sortirà barcelona
+    //la crida a la funció search es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari, 
+    //en aquesta crida, s'hi passa el valor que l'usuari ha escrit dins la casella de cerca, que es guarda a la variable searchbox.value
+    //i es passa com a argument a la funció search(cytyName)
     search(searchbox.value);
 }
 
@@ -406,7 +409,7 @@ function formatSunRiseSetHour(sunrise, sunset) {
     }
 }
 
-
+//obtinc les dades meteorològiques per a les coordenades proporcionades per l'objecte pos que es passa com a paràmetre
 async function success(pos) {
 
     //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
@@ -464,7 +467,7 @@ async function success(pos) {
 }
 
 
-
+//la crida a la funció search es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari
 async function search(cityName) {
 
     try {
