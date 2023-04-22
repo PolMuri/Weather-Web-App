@@ -493,25 +493,46 @@ function GetWeatherByCoordsFive(latitude, longitude) {
     .then(data => {
 
         //Temperatura mínima i màxima del dia
-        for(i = 0; i<5; i++){
-            document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min);
+        //El toFixed(1) és per mostrar només un decimal
+        for (i = 0; i < 5; i++) {
+            document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min).toFixed(1) + "ºC";
         }
+          
+        for (i = 0; i < 5; i++) {
+            document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max).toFixed(1) + "ºC";
+        }
+          
 
-        for(i = 0; i<5; i++){
-            document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max);
-        }
-
-        /*Obtenir els icones adequats a cada temps, agafo els icones online que té la pròpia openweathermap. Es fa un altre bucle per obtenir 
-        els índexs adequats per a cada icona del temps per als propers 5 dies, accedint als elements de l'objecte JSON amb la sintaxi data.list[i].weather[0].icon i 
-        afegint la URL de la imatge corresponent a cada icona amb la funció document.getElementById("img" + (i+1)).src. 
-        És a dir utilitzo l'API de OpenWeatherMap per obtenir l'adreça de la imatge corresponent a cada tipus de temps (sunny, cloudy, etc.). 
-        A continuació actualitza la propietat src de la imatge amb l'adreça obtinguda per a cada dia, fent servir la funció document.getElementById() per seleccionar 
-        la imatge corresponent a cada dia i concatenant l'adreça de la imatge amb el codi de l'icona obtingut de l'API de OpenWeatherMap.*/
-         for(i = 0; i<5; i++){
-            document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
-            data.list[i].weather[0].icon
-            +".png";
-        }
+        /*Per cada iteració agafa l'índex de la llista "data" en la posició "i". A continuació, la funció busca l'element d'imatge amb l'ID "img" 
+        seguit del número de la iteració actual i l'emmagatzema en la variable imgElement.
+        La funció compara l'índex de la llista "data" en la posició "i" amb una sèrie de codis d'icones de temps. Si l'índex coincideix amb un dels 
+        codis especificats, llavors la funció canvia la font de la imatge associada a l'element d'imatge per una imatge corresponent al tipus de temps representat per l'icona.*/
+        for(i = 0; i < 5; i++) {
+            var iconCode = data.list[i].weather[0].icon;
+            var imgElement = document.getElementById("img" + (i + 1));
+            
+            if (iconCode === "01d" || iconCode === "01n") {
+              imgElement.src = "images/sun.png";
+            } else if (iconCode === "02d" || iconCode === "02n") {
+              imgElement.src = "images/few clouds.png";
+            } else if (iconCode === "03d" || iconCode === "03n") {
+              imgElement.src = "images/clouds.png";
+            } else if (iconCode === "04d" || iconCode === "04n") {
+              imgElement.src = "images/clouds.png";
+            } else if (iconCode === "09d" || iconCode === "09n") {
+              imgElement.src = "images/drizzle.png";
+            } else if (iconCode === "10d" || iconCode === "10n") {
+              imgElement.src = "images/rain.png";
+            } else if (iconCode === "11d" || iconCode === "11n") {
+                imgElement.src = "images/storm.png";
+            } else if (iconCode === "13d" || iconCode === "13n") {
+                imgElement.src = "images/snow.png";
+            } else if (iconCode === "50d" || iconCode === "50n") {
+                imgElement.src = "images/foggy.png";
+            } else {
+              imgElement.src = "images/sun.png";
+            }
+          }
        
     })
     //Si no es poden obtenir les dades saltarà aquest error, només poso l'error a la funció dels 5 dies perquè salti només una vegada
@@ -578,21 +599,42 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${ap
 .then(data => {
 
     //Temperatura mínima i màxima del dia
-    for(i = 0; i<5; i++){
-        document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min);
+    for (i = 0; i < 5; i++) {
+        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min).toFixed(1) + "ºC";
+    }
+      
+    for (i = 0; i < 5; i++) {
+        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max).toFixed(1) + "ºC";
     }
 
-    for(i = 0; i<5; i++){
-        document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max);
-    }
-
-    //Obtenir els icones adequats a cada temps, agafo els icones online que té la pròpia openweathermap
-     for(i = 0; i<5; i++){
-        document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
-        data.list[i].weather[0].icon
-        +".png";
-    }
-
+    //Posar els icones adequats a cada temps
+    for(i = 0; i < 5; i++) {
+        var iconCode = data.list[i].weather[0].icon;
+        var imgElement = document.getElementById("img" + (i + 1));
+        
+        if (iconCode === "01d" || iconCode === "01n") {
+          imgElement.src = "images/sun.png";
+        } else if (iconCode === "02d" || iconCode === "02n") {
+          imgElement.src = "images/few clouds.png";
+        } else if (iconCode === "03d" || iconCode === "03n") {
+          imgElement.src = "images/clouds.png";
+        } else if (iconCode === "04d" || iconCode === "04n") {
+          imgElement.src = "images/clouds.png";
+        } else if (iconCode === "09d" || iconCode === "09n") {
+          imgElement.src = "images/drizzle.png";
+        } else if (iconCode === "10d" || iconCode === "10n") {
+          imgElement.src = "images/rain.png";
+        } else if (iconCode === "11d" || iconCode === "11n") {
+            imgElement.src = "images/storm.png";
+        } else if (iconCode === "13d" || iconCode === "13n") {
+            imgElement.src = "images/snow.png";
+        } else if (iconCode === "50d" || iconCode === "50n") {
+            imgElement.src = "images/foggy.png";
+        } else {
+          imgElement.src = "images/sun.png";
+        }
+      }
+      
 })
 
 .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"))

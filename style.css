@@ -345,13 +345,12 @@ footer {
       }
       
     
-      #iconsContainer {
+    #iconsContainer {
         display: flex;
         justify-content: center;
         flex-wrap: nowrap;
         overflow-x: auto;
-      }
-      
+      }  
     
     /*Ara mateix no utilitzo la sensació tèrmica
     .sensaTermi{
