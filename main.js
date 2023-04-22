@@ -46,6 +46,8 @@ function onSubmit(event) {
     //en aquesta crida, s'hi passa el valor que l'usuari ha escrit dins la casella de cerca, que es guarda a la variable searchbox.value
     //i es passa com a argument a la funció search(cytyName)
     search(searchbox.value);
+    //Funció per obtenir el temps dels propers 5 dies
+    GetInfo(searchbox.value);
 }
 
 //basat en la temperatura, posem una imatge o una altra
@@ -371,6 +373,9 @@ function getLocationSuccess(pos) {
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
+
+    //A continuació, la funció getLocationSuccess crida aquesta funció GetWeatherByCoordsFive amb la latitud i longitud obtingudes per obtenir el temps
+    GetWeatherByCoordsFive(crd.latitude, crd.longitude);
 }
 
 //error: aquesta funció és cridada si hi ha un error en obtenir les dades de geolocalització. L'argument de la funció és un 
@@ -385,6 +390,20 @@ function error(err) {
 document.getElementById("getLocation").addEventListener("click", function () {
     navigator.geolocation.getCurrentPosition(success, error, options);
 });
+
+/* és un esdeveniment d'onclick que s'afegeix a l'element amb l'identificador "getLocation" a 
+través de la funció addEventListener(). Quan l'usuari fa clic en aquest element, es crida la funció getLocation().*/
+document.getElementById("getLocation").addEventListener("click", function () {
+    getLocation();
+});
+
+/* La funció getLocation() utilitza la API de geolocalització del navegador per obtenir les coordenades de l'usuari mitjançant la funció getCurrentPosition(). 
+El resultat és passat com a argument a la funció getLocationSuccess(), que tracta les dades de geolocalització i actualitza la informació del temps per aqust lloc.*/
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(getLocationSuccess);
+}
+
+
 
 //La funció formatSunRiseSetHour accepta dos arguments: sunrise i sunset
 function formatSunRiseSetHour(sunrise, sunset) {
@@ -466,6 +485,39 @@ async function success(pos) {
     clearName();
 }
 
+//Funció per mostrar el temps de 5 dies depenent de la geolocalització
+function GetWeatherByCoordsFive(latitude, longitude) {
+    // es fa una petició fetch a l'API de OpenWeatherMap amb les coordenades proporcionades per obtenir les dades de la previsió del temps per a la ubicació desitjada. 
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${api.key}&units=metric`)
+    .then(response => response.json())
+    .then(data => {
+
+        //Temperatura mínima i màxima del dia
+        for(i = 0; i<5; i++){
+            document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min);
+        }
+
+        for(i = 0; i<5; i++){
+            document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max);
+        }
+
+        /*Obtenir els icones adequats a cada temps, agafo els icones online que té la pròpia openweathermap. Es fa un altre bucle per obtenir 
+        els índexs adequats per a cada icona del temps per als propers 5 dies, accedint als elements de l'objecte JSON amb la sintaxi data.list[i].weather[0].icon i 
+        afegint la URL de la imatge corresponent a cada icona amb la funció document.getElementById("img" + (i+1)).src. 
+        És a dir utilitzo l'API de OpenWeatherMap per obtenir l'adreça de la imatge corresponent a cada tipus de temps (sunny, cloudy, etc.). 
+        A continuació actualitza la propietat src de la imatge amb l'adreça obtinguda per a cada dia, fent servir la funció document.getElementById() per seleccionar 
+        la imatge corresponent a cada dia i concatenant l'adreça de la imatge amb el codi de l'icona obtingut de l'API de OpenWeatherMap.*/
+         for(i = 0; i<5; i++){
+            document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
+            data.list[i].weather[0].icon
+            +".png";
+        }
+       
+    })
+    //Si no es poden obtenir les dades saltarà aquest error, només poso l'error a la funció dels 5 dies perquè salti només una vegada
+    .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"));
+}
+
 
 //la crida a la funció search es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari
 async function search(cityName) {
@@ -514,11 +566,91 @@ async function search(cityName) {
         //natejem el nom de la ciutat buscada amb aquesta funció
         clearName();
     } catch (err) {
-        console.log(err);
-        //El missatge d'alerta que apareix a la pantalla/navegador quan algú posa dades incorrectes
-        alert('POSA UN NOM VÀLID');
+        //No hi poso missatge, faig que només surti al cridar el temps dels 5 dies per no duplicar el missatge d'error que rep l'usuari
     }
 }
+
+//La funció per veure el temps dels propers 5 dies de forma totalment diferent, així hi ha vàries formes d'obtenir i mostrar les dades
+function GetInfo(cityName) {
+
+fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${api.key}&units=metric`)
+.then(response => response.json())
+.then(data => {
+
+    //Temperatura mínima i màxima del dia
+    for(i = 0; i<5; i++){
+        document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min);
+    }
+
+    for(i = 0; i<5; i++){
+        document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max);
+    }
+
+    //Obtenir els icones adequats a cada temps, agafo els icones online que té la pròpia openweathermap
+     for(i = 0; i<5; i++){
+        document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
+        data.list[i].weather[0].icon
+        +".png";
+    }
+
+})
+
+.catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"))
+}
+
+
+
+//Aconseguim el número correcte que es correspon al dia correcte
+/*S'afegeix el número del dia actual (obtingut a través de la funció getDay() que retorna un número del 0 al 6 representant diumenge a dissabte) al número del dia que es vol consultar. 
+Si la suma supera 6 (que és el número màxim de dies que té una setmana), significa que el dia correspon a la següent setmana, 
+així que se li resta 7 per obtenir el número correcte de la setmana. 
+Si la suma no supera 6, vol dir que el dia correspon a la mateixa setmana, per tant s'obté directament el número corresponent a través de la funció.*/
+function CheckDay(day){
+    if(day + d.getDay() > 6){
+        return day + d.getDay() - 7;
+    }
+    else{
+        return day + d.getDay();
+    }
+}
+
+/* aquestes línies de codi defineixen les variables que s'utilitzen més endavant en la funció selectIdiomFive(). 
+La variable d no s'utilitza en aquesta funció, però podria ser útil en altres parts del codi. La variable weekday 
+s'inicialitza amb els noms dels dies de la setmana en català per defecte, però es sobreescriu amb els noms 
+en l'idioma seleccionat a través del select del formulari.*/ 
+var d = new Date();
+var weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte",];
+
+/*Aquesta funció primer obté l'idioma seleccionat del desplegable amb id Llenguatges. Després amb el
+switch s'assigna a l'array weekday l'array de noms de dies corresponent a l'idioma seleccionat. Finalment, la 
+funció utilitza l'array weekday per posar els noms dels dies a la pantalla. */
+
+function selectIdiomFive() {
+    let idioma = document.getElementById("Llenguatges").value;
+    let weekday = [];
+
+    switch (idioma) {
+        case 'Català':
+            weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
+            break;
+
+        case 'Español':
+            weekday = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            break;
+
+        case 'English':
+            weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            break;
+    }
+
+    for(i = 0; i<5; i++){
+        document.getElementById("day" + (i+1)).innerHTML = weekday[CheckDay(i)];
+    }
+}
+//Crido la funció al acabar el codi per mostrar els dies per defecte al carregar la pàgina
+//si no la cridés caldria canviar d'idioma amb el select perquè sortís el nom dels dies
+selectIdiomFive();
+  
 
 //convertim la temperatura a Celsius
 //funció que utilitzava quan no sabia que les dades de l'API ja es podien cridar en Celsius

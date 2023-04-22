@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="./reset.css"/>
     <link rel="stylesheet" href="./style.css"/>
     <link rel="stylesheet" media="screen" href="./style.css" />
-    <!--Durant el nadal i potser també durant la època més freda de l'any hi haurà neu!-->
-    <script class="script" id="script" defer></script>
+    <!--Durant el nadal i potser també durant la època més freda de l'any hi haurà neu! <script class="script" id="script" defer></script>-->
     <script src="./main.js" defer></script>
     <title> Web App Clima</title>     
 </head>
 
 <body>
     <div class="custom-select">
-    <select name="Llenguatges" id="Llenguatges" onchange="selectIdiom()">
+    <select name="Llenguatges" id="Llenguatges" onchange="selectIdiom(); selectIdiomFive()">
         <option value="Català" id="Català">Català</option>
         <option value="Español" id="Español">Español</option>
         <option value="English" id="English">English</option>
@@ -54,6 +53,41 @@
         <!-- Ara mateix no utilitzo la sensació tèrmica 
         <div class="sensaTermi" id="sensaTermi"></div> 
         -->
+        </div>
+
+        <div id = "weatherContainer">
+            <div id="iconsContainer">    
+                <div class = "icons">
+                    <p class="weather" id="day1"></p>
+                    <div class="image"><img src="dots.png" class="imgClass" id="img1"></div>
+                    <p class="minValues" id="day1Min">...</p>
+                    <p class="maxValues" id="day1Max">...</p>
+                </div>
+                <div class = "icons">
+                    <p class="weather" id="day2"></p>
+                    <div class="image"><img src="dots.png" class="imgClass" id="img2"></div>
+                    <p class="minValues" id="day2Min">...</p>
+                    <p class="maxValues" id="day2Max">...</p>
+                </div>
+                <div class = "icons">
+                    <p class="weather" id="day3"></p>
+                    <div class="image"><img src="dots.png" class="imgClass" id="img3"></div>
+                    <p class="minValues" id="day3Min">...</p>
+                    <p class="maxValues" id="day3Max">...</p>
+                </div>
+                <div class = "icons">
+                    <p class="weather" id="day4"></p>
+                    <div class="image"><img src="dots.png" class="imgClass" id="img4"></div>
+                    <p class="minValues" id="day4Min">...</p>
+                    <p class="maxValues" id="day4Max">...</p>
+                </div>
+                <div class = "icons">
+                    <p class="weather" id="day5"></p>
+                    <div class="image"><img src="dots.png" class="imgClass" id="img5"></div>
+                    <p class="minValues" id="day5Min">...</p>
+                    <p class="maxValues" id="day5Max">...</p>
+                </div>
+            </div>
         </div>
        
     </div>
