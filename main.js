@@ -487,28 +487,30 @@ async function success(pos) {
 
 //Funció per mostrar el temps de 5 dies depenent de la geolocalització
 function GetWeatherByCoordsFive(latitude, longitude) {
-    // es fa una petició fetch a l'API de OpenWeatherMap amb les coordenades proporcionades per obtenir les dades de la previsió del temps per a la ubicació desitjada. 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${api.key}&units=metric`)
+    // es fa una petició fetch a l'API de OpenWeatherMap amb les coordenades proporcionades per obtenir les dades de la previsió del temps per a la ubicació desitjada els propers dies. 
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric
+    `)
     .then(response => response.json())
     .then(data => {
 
         //Temperatura mínima i màxima del dia
         //El toFixed(1) és per mostrar només un decimal
         for (i = 0; i < 5; i++) {
-            document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min).toFixed(1) + "ºC";
+            const minTemp = data.daily[i].temp.min.toFixed(1);
+            const maxTemp = data.daily[i].temp.max.toFixed(1);
+            document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + minTemp + "ºC";
+            document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + maxTemp + "ºC";
         }
-          
-        for (i = 0; i < 5; i++) {
-            document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max).toFixed(1) + "ºC";
-        }
+        
           
 
-        /*Per cada iteració agafa l'índex de la llista "data" en la posició "i". A continuació, la funció busca l'element d'imatge amb l'ID "img" 
-        seguit del número de la iteració actual i l'emmagatzema en la variable imgElement.
-        La funció compara l'índex de la llista "data" en la posició "i" amb una sèrie de codis d'icones de temps. Si l'índex coincideix amb un dels 
-        codis especificats, llavors la funció canvia la font de la imatge associada a l'element d'imatge per una imatge corresponent al tipus de temps representat per l'icona.*/
+        /*A cada iteració del bucle, es defineixen dues variables: iconCode i imgElement. La variable iconCode es defineix com l'icona del temps corresponent a 
+        cada dia, que s'obté a partir de l'objecte "daily" retornat per la crida a la API. La info s'obté mitjançant la propietat "weather" d'aquest objecte, 
+        que és un array que conté informació sobre les condicions atmosfèriques de cada dia. Només s'agafa la primera posició d'aquest array perquè és l'icone
+        La variable imgElement és l'element HTML on s'ha de mostrar l'icona del temps per a cada dia. Aquest element es defineix mitjançant el seu ID, 
+        que es construeix amb l'string "img" seguida del número de dia corresponent:per exemple, "img1" per al primer dia, etc*/
         for(i = 0; i < 5; i++) {
-            var iconCode = data.list[i].weather[0].icon;
+            var iconCode = data.daily[i].weather[0].icon;
             var imgElement = document.getElementById("img" + (i + 1));
             
             if (iconCode === "01d" || iconCode === "01n") {
@@ -591,14 +593,16 @@ async function search(cityName) {
     }
 }
 
-//La funció per veure el temps dels propers 5 dies de forma totalment diferent, així hi ha vàries formes d'obtenir i mostrar les dades
+/*La funció per veure el temps dels propers 5 dies de forma totalment diferent, així hi ha vàries formes d'obtenir i mostrar les dades
+NO ES POT OBTENIR EL TEMPS DELS PROPERS DIES SENCERS PER NOM DE CIUTAT (NOMÉS ES POT AMB LAT/LON), per tant aquí agafo el temps dels
+propers dies en periodes de 3 hores, per això la diferència entre temperatura mínima i màxima és molt lleu */
 function GetInfo(cityName) {
 
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${api.key}&units=metric`)
 .then(response => response.json())
 .then(data => {
 
-    //Temperatura mínima i màxima del dia
+    //Temperatura mínima i màxima del dia aquí es fa amb una llista en comptes d'amb un array com quna va per lat i lon
     for (i = 0; i < 5; i++) {
         document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min).toFixed(1) + "ºC";
     }
@@ -607,7 +611,7 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${ap
         document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max).toFixed(1) + "ºC";
     }
 
-    //Posar els icones adequats a cada temps
+    //Posar els icones adequats a cada temps, aquí es fa amb una llista en comptes d'amb un array
     for(i = 0; i < 5; i++) {
         var iconCode = data.list[i].weather[0].icon;
         var imgElement = document.getElementById("img" + (i + 1));
