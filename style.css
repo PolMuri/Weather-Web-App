@@ -146,7 +146,7 @@ footer {
     display: flex;
     position: relative;
     justify-content: center;
-    border-radius: 25px;
+    border-radius: 27px;
     margin: 0px auto;
     top: -2.1rem;
     align-items: center;
@@ -156,6 +156,27 @@ footer {
     width: 50px; /* or any desired width */
     height: 50px; /* or any desired height */
     border: none;
+
+   }
+   
+   button:hover {
+    background-position: right center;
+    -webkit-animation: pulse 2s;
+    animation: pulse512 1.5s;
+   }
+   
+   @keyframes pulse512 {
+    0% {
+     box-shadow: 0 0 0 0 #05bada66;
+    }
+   
+    70% {
+     box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+    }
+   
+    100% {
+     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+    }
   }
 
 .search-form {
