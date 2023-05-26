@@ -161,8 +161,8 @@ footer {
    
    button:hover {
     background-position: right center;
-    -webkit-animation: pulse 2s;
-    animation: pulse512 1.5s;
+    -webkit-animation: pulse 6s;
+    animation: pulse512 4s;
    }
    
    @keyframes pulse512 {
