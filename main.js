@@ -444,9 +444,11 @@ async function success(pos) {
     //anem a remplaçar les dades que tenim per les que ens dona la api
     city.innerHTML = `${data.name}, ${data.sys.country}`;
     date.innerHTML = (new Date()).toLocaleDateString();
-    temp.innerHTML = `${(data.main.temp)} ºC`;
+    //la funció .to.Fixed l'afegeixo jo al final de les dades que busco per arrodonir les dades que rebo de la api
+    //entre parèntesis hi ha el nombre de decimals als quals vull que m'ho arrodoneixi
+    temp.innerHTML = `${(data.main.temp.toFixed(1))} ºC`;
     weather.innerHTML = data.weather[0].description;
-    range.innerHTML = `Temp min/max: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+    range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
     humidity.innerHTML = `Hum: ${data.main.humidity}%`;
     wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
     pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
@@ -494,7 +496,7 @@ function GetWeatherByCoordsFive(latitude, longitude) {
     .then(data => {
 
         //Temperatura mínima i màxima del dia
-        //El toFixed(1) és per mostrar només un decimal
+        //El toFixed(1) és per arrodonir i mostrar només un decimal
         for (i = 0; i < 5; i++) {
             const minTemp = data.daily[i].temp.min.toFixed(1);
             const maxTemp = data.daily[i].temp.max.toFixed(1);
@@ -559,9 +561,9 @@ async function search(cityName) {
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
         date.innerHTML = (new Date()).toLocaleDateString();
-        temp.innerHTML = `${(data.main.temp)} ºC`;
+        temp.innerHTML = `${(data.main.temp.toFixed(1))} ºC`;
         weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp min/max: ${(data.main.temp_min)} ºC / ${(data.main.temp_max)} ºC`;
+        range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
         humidity.innerHTML = `Hum: ${data.main.humidity}%`;
         wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
