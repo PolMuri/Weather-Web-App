@@ -450,7 +450,7 @@ async function success(pos) {
     weather.innerHTML = data.weather[0].description;
     range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
     humidity.innerHTML = `Hum: ${data.main.humidity}%`;
-    wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
+    wind.innerHTML = `Vel: ${data.wind.speed} Met./seg.`;
     pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
     //Ara mateix no utilitzo la sensació tèrmica
     //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
@@ -565,7 +565,7 @@ async function search(cityName) {
         weather.innerHTML = data.weather[0].description;
         range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
         humidity.innerHTML = `Hum: ${data.main.humidity}%`;
-        wind.innerHTML = `Vel : ${data.wind.speed} Met./seg.`;
+        wind.innerHTML = `Vel: ${data.wind.speed} Met./seg.`;
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
         //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
         let idiomSun = selectIdiom();
