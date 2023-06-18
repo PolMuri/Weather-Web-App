@@ -98,17 +98,17 @@ function updateWeatherImage(data) {
     weatherImg.src = src;
 }
 
-//Funció per eliminar l'animació de pluja quan no toca que hi sigui, eliminant tots els elements HR 
+//Funció per eliminar l'animació de pluja quan no toca que hi sigui, eliminant tots els elements rain 
 //del document HTML creats per fer l'animació de pluja
-function eliminarPluja() {
-    //Declara una variable "elements" que conté tots els elements HR del document HTML 
-    //utilitzant el mètode "getElementsByTagName" de l'objecte "document" i passant com a paràmetre "hr"
-    let elements = document.getElementsByTagName("hr");
-    //Utilitza un bucle "while" per iterar mentre hi hagi elements HR en la variable "elements"
-    //A cada iteració del bucle, elimina l'element HR del document HTML utilitzant el mètode "removeChild" de 
-    //l'objecte parent de l'element HR (element[0].parentNode) i passant com a paràmetre l'element HR (elements[0]).
-    //El bucle torna a executar-se des de l'inici fins a que no quedi cap element HR en la variable "elements".
-    //Així s'eliminaria tots els elements HR del document HTML.
+function removeRain() {
+    //Declara una variable "elements" que conté tots els elements rain del document HTML 
+    //utilitzant el mètode "getElementsByTagName" de l'objecte "document" i passant com a paràmetre "rain"
+    let elements = document.getElementsByTagName("HR");
+    //Utilitza un bucle "while" per iterar mentre hi hagi elements rain en la variable "elements"
+    //A cada iteració del bucle, elimina l'element rain del document HTML utilitzant el mètode "removeChild" de 
+    //l'objecte parent de l'element rain (element[0].parentNode) i passant com a paràmetre l'element rain (elements[0]).
+    //El bucle torna a executar-se des de l'inici fins a que no quedi cap element rain en la variable "elements".
+    //Així s'eliminaria tots els elements rain del document HTML.
     while (elements.length > 0) {
         //A cada iteració del while, l'element que es vol eliminar és sempre l'element que ocupa la primera posició. 
         //Això permet recórrer tots els elements de la llista, ja que a mesura que es van eliminant, 
@@ -117,9 +117,9 @@ function eliminarPluja() {
     }
 }
 
-//Funció per eliminar l'animació que genera la neu
-function eliminarNeu() {
-    let elements = document.getElementsByClassName("neu");
+//Funció per eliminar l'animació que genera la snow
+function removeSnow() {
+    let elements = document.getElementsByClassName("snow");
     while (elements.length > 0) {
         elements[0].parentNode.removeChild(elements[0]);
     }
@@ -128,8 +128,8 @@ function eliminarNeu() {
 
 /* NO FUNCIONA, ja que una vegada s'ha cridat i executat un script, no se'l pot parar/eliminar
 
-//CREO LA FUNCIÖ PER POSAR PLUJA O NEU a mode d'animació
-function animacioNeu() {   
+//CREO LA FUNCIÖ PER POSAR PLUJA O snow a mode d'animació
+function animaciosnow() {   
     //ara depenent del temps que faci tindrem una animació o una altra
     //Es crea la variable "script" utilitzant la funció document.createElement("script") que crea un nou element en aquest cas script.
     const script = document.createElement("script");
@@ -138,7 +138,7 @@ function animacioNeu() {
     //S'establix la propietat className de l'element script creat anteriorment a "script"
     script.className = "script";
     //El mateix que abans amb la propietat id
-    script.id = "scriptNeu";
+    script.id = "scriptsnow";
     //S'establix la propietat defer de l'element script creat anteriorment a true.
     script.defer = true;
     //S'afegeix l'element script creat a l'HTML utilitzant el mètode appendChild() i passant com a paràmetre l'element script creat anteriorment.
@@ -146,8 +146,8 @@ function animacioNeu() {
 
 }
 
-function eliminarAnimacionNeu() {
-    const script = document.getElementById("scriptNeu");
+function eliminarAnimacionsnow() {
+    const script = document.getElementById("scriptsnow");
     document.body.removeChild(script);
 }
 
@@ -161,20 +161,20 @@ function backImage(data) {
     //dic que el color del text és blanc (el mateix que al CSS), així quan s'entra a l'if de Clouds i a dins a l'if de l'ID 801
     //i es canvia el color del text al negre, al anar a dins d'un altre if el color del text torna al blanc com correspón
     document.getElementById("card").style.color = "rgb(224, 224, 230";
-    //La funció "eliminarAnimacionNeu()" només es crida si hi ha un element 
-    //amb l'id "scriptNeu" i s'eviten problemes amb la càrrega de la imatge de fons.
-    //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la neu
+    //La funció "eliminarAnimacionsnow()" només es crida si hi ha un element 
+    //amb l'id "scriptsnow" i s'eviten problemes amb la càrrega de la imatge de fons.
+    //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la snow
 
     //ara depenent del temps que faci tindrem una foto de background o una altra
     if (backUrl == 'Thunderstorm') {
-        eliminarNeu();
+        removeSnow();
         //Perquè no es solapin les animacions de pluja si es van buscant llocs
-        // de forma consecutiva a on plogui, elimino l'animació de neu sempre, i després la creo
-        eliminarPluja();
+        // de forma consecutiva a on plogui, elimino l'animació de snow sempre, i després la creo
+        removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/tempesta.png')";
         //ANIMACIÓ DE PLUJA EXPLICADA
-        //Es crea una variable anomenada "hrElement" per a ser utilitzada per a crear cada gota de pluja.
-        let hrElement;
+        //Es crea una variable anomenada "rainElement" per a ser utilitzada per a crear cada gota de pluja.
+        let rainElement;
         //Es crea una variable anomenada "comptador" i es defineix com 10.
         //Aquesta variable es utilitza per a determinar quantes gotes de pluja es crearan.
         let comptador = 10;
@@ -185,27 +185,27 @@ function backImage(data) {
         //Es crea un bucle "for" que itera fins a quan i és més petit que el comptador.
         for (let i = 0; i < comptador; i++) {
             //Dins del bucle, es crea una nova gota de pluja utilitzant la variable 
-            //"hrElement" i es fa servir el mètode "createElement" per crear un element HR.
-            hrElement = document.createElement('HR');
+            //"rainElement" i es fa servir el mètode "createElement" per crear un element rain.
+            rainElement = document.createElement('HR');
             //S'estableix la posició de la gota de pluja en l'eix X utilitzant la variable 
             //"espaiament" per calcular la posició correcta.
-            hrElement.style.left = (i * espaiament) + 'px';
+            rainElement.style.left = (i * espaiament) + 'px';
             //S'estableix la durada de l'animació de la gota de pluja utilitzant la 
             //funció "Math.random" per generar un valor aleatori entre 0,3 i 0,6 segons.
-            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
             //Per canviar la durada de l'animació, si la vull fer més ràpida haig de baixar els valors de
             //animationDuration i pujar els de animationDelay
-            hrElement.style.animationDelay = Math.random() * 4 + 's';
-            //S'afegeix l'element "HR" al document mitjançant el mètode "appendChild".
-            document.body.appendChild(hrElement);
+            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            //S'afegeix l'element "rain" al document mitjançant el mètode "appendChild".
+            document.body.appendChild(rainElement);
         }
     } else if (backUrl == 'Clear') {
-        eliminarNeu();
-        eliminarPluja();
+        removeSnow();
+        removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
     } else if (backUrl == 'Clouds') {
-        eliminarNeu();
-        eliminarPluja();
+        removeSnow();
+        removeRain();
         //Si l'id del temps és el següent vol dir que hi ha pocs núvols (few clouds: 11-25%) i per tant poso una imatge que es correspongui
         if (backUrlId == 801) {
             document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.png')";
@@ -219,85 +219,85 @@ function backImage(data) {
             document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
         }
     } else if (backUrl == 'Drizzle') {
-        eliminarNeu();
-        eliminarPluja();
+        removeSnow();
+        removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
-        let hrElement;
+        let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            hrElement = document.createElement('HR');
-            hrElement.style.left = (i * espaiament) + 'px';
-            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
-            hrElement.style.animationDelay = Math.random() * 4 + 's';
-            document.body.appendChild(hrElement);
+            rainElement = document.createElement('rain');
+            rainElement.style.left = (i * espaiament) + 'px';
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            document.body.appendChild(rainElement);
         }
 
     } else if (backUrl == 'Rain') {
-        eliminarNeu();
-        eliminarPluja();
+        removeSnow();
+        removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
-        let hrElement;
+        let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            hrElement = document.createElement('HR');
-            hrElement.style.left = (i * espaiament) + 'px';
-            hrElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
-            hrElement.style.animationDelay = Math.random() * 4 + 's';
-            document.body.appendChild(hrElement);
+            rainElement = document.createElement('HR');
+            rainElement.style.left = (i * espaiament) + 'px';
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            document.body.appendChild(rainElement);
         }
 
     } else if (backUrl == 'Snow') {
-        eliminarPluja();
-        eliminarNeu();
+        removeRain();
+        removeSnow();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
-        //FUNCIÓ CREACIÓ ANIMACIÓ DE NEU EXPLICADA
-        //Crea 15 flocs de neu que apareixen en una posició aleatòria de la pantalla, 
+        //FUNCIÓ CREACIÓ ANIMACIÓ DE snow EXPLICADA
+        //Crea 15 flocs de snow que apareixen en una posició aleatòria de la pantalla, 
         //amb una animació de caure i una duració i delay aleatori, i una vegada finalitza la animació es crea un de nou.
 
-        //La primera línia declara una variable "neuElement" que es utilitzarà per crear cada 
-        //element DIV que representarà un floc de neu.
-        let neuElement;
-        //És la quantitat de flocs de neu que es crearan.
+        //La primera línia declara una variable "snowElement" que es utilitzarà per crear cada 
+        //element DIV que representarà un floc de snow.
+        let snowElement;
+        //És la quantitat de flocs de snow que es crearan.
         let comptador = 28;
 
-        //Funció que crea cada floc de neu
-        function crearFlocNeu() {
+        //Funció que crea cada floc de snow
+        function createSnow() {
             //Es crea un element DIV utilitzant el mètode "createElement" de l'objecte "document" i passant com a paràmetre "DIV".
-            neuElement = document.createElement('DIV');
-            //Utilitzant el mètode "classList.add" s'afegeix la classe "neu" a l'element DIV creat anteriorment.
-            neuElement.classList.add('neu');
+            snowElement = document.createElement('DIV');
+            //Utilitzant el mètode "classList.add" s'afegeix la classe "snow" a l'element DIV creat anteriorment.
+            snowElement.classList.add('snow');
             //Utilitzant l'objecte style es assigna una posició aleatòria en l'eix x i en l'eix y a l'element DIV.
-            neuElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
-            neuElement.style.top = Math.floor(Math.random() * window.innerHeight) + 'px';
+            snowElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            snowElement.style.top = Math.floor(Math.random() * window.innerHeight) + 'px';
             //Utilitzant l'objecte l'style es defineix l'animació que es farà sobre 
-            //l'element DIV, en aquest cas es defineix l'animació "caureNeu" que s'ha de definir en el CSS (@keyframes)
-            neuElement.style.animationName = 'caureNeu';
+            //l'element DIV, en aquest cas es defineix l'animació "cauresnow" que s'ha de definir en el CSS (@keyframes)
+            snowElement.style.animationName = 'snowing';
             //Utilitzo l'style per definir la duració d'animació entre 5s i 10s i un delay entre 0s i 5s.
-            neuElement.style.animationDuration = (13 + Math.random() * 90) + 's';
+            snowElement.style.animationDuration = (13 + Math.random() * 90) + 's';
             //Afegint un event listener al element DIV, es detecta quan l'animació finalitza, 
             //esborrant així l'element i creant un de nou.
-            neuElement.addEventListener('animationend', function () {
+            snowElement.addEventListener('animationend', function () {
                 this.remove();
-                crearFlocNeu();
+                createSnow();
             });
             //Finalment s'afegeix l'element DIV al document HTML 
             //utilitzant el mètode "appendChild" de l'objecte "body" i passant com a paràmetre l'element DIV.
-            document.body.appendChild(neuElement);
+            document.body.appendChild(snowElement);
 
         }
 
-        //La segona part del codi és un bucle "for" que executa la funció "crearFlocNeu" 15 vegades 
+        //La segona part del codi és un bucle "for" que executa la funció "createSnow" 15 vegades 
         //( el valor del comptador en aquest cas concret)
         for (let i = 0; i < comptador; i++) {
-            crearFlocNeu();
+            createSnow();
         }
 
         //hi podria o hauria d'haver posat un else
     } else if (backUrl == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
-        eliminarNeu();
-        eliminarPluja();
+        removeSnow();
+        removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/boira.png')";
     }
 }
@@ -330,7 +330,7 @@ function selectIdiom() {
             //una cosa o una altra
             document.getElementById("searchbox").placeholder = "Busca una localitat: ";
             //Canviar l'idioma del footer depenent de l'idioma que es seleccioni
-            document.getElementById("footerText").innerHTML = "Creat per <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("footerText").innerHTML = "Creat per <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             break;
 
         case 'Español':
@@ -341,13 +341,13 @@ function selectIdiom() {
             //curta i específica per a modificar el valor de l'atribut "placeholder" en un element HTML, ja que el navegador té una propietat que li correspon específicament.
             //La informació que he trobat diu que es recomana usar .setAttribute per a la compatibilitat entre navegadors, mentre que .placeholder és més còmode per a aplicacions web modernes.
             document.getElementById("searchbox").placeholder = "Busca una localidad: ";
-            document.getElementById("footerText").innerHTML = "Creado por <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("footerText").innerHTML = "Creado por <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             break;
 
         case 'English':
             idiomaFetch = 'en';
             document.getElementById("searchbox").placeholder = "Search for a location: ";
-            document.getElementById("footerText").innerHTML = "Created by <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("footerText").innerHTML = "Created by <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             break;
     }
     return idiomaFetch;
