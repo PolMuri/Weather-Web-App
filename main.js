@@ -226,7 +226,7 @@ function backImage(data) {
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            rainElement = document.createElement('rain');
+            rainElement = document.createElement('HR');
             rainElement.style.left = (i * espaiament) + 'px';
             rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
             rainElement.style.animationDelay = Math.random() * 4 + 's';
