@@ -42,12 +42,12 @@ function onSubmit(event) {
     //redenderització de la pàgina quan perdem el submit
     event.preventDefault();
     //posem la informació de dins el searchbox,és a dir, si escric barcelona i apreto, sortirà barcelona
-    //la crida a la funció search es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari, 
+    //la crida a la funció getWeatherByLocation es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari, 
     //en aquesta crida, s'hi passa el valor que l'usuari ha escrit dins la casella de cerca, que es guarda a la variable searchbox.value
-    //i es passa com a argument a la funció search(cytyName)
-    search(searchbox.value);
+    //i es passa com a argument a la funció getWeatherByLocation(cityName)
+    getWeatherByLocation(searchbox.value);
     //Funció per obtenir el temps dels propers 5 dies
-    GetInfo(searchbox.value);
+    getWeatherByLocationFive(searchbox.value);
 }
 
 //basat en la temperatura, posem una imatge o una altra
@@ -386,9 +386,9 @@ function error(err) {
 
 //L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
 //un event listener al botó amb id "getLocation". Quan l'usuari cliqui aquest botó, es cridarà la funció navigator.geolocation.getCurrentPosition 
-//amb les opcions especificades a options, les funcions success i error com a arguments, i es passaran les dades obtingudes a la funció success.
+//amb les opcions especificades a options, les funcions GetWeatherByCoords i error com a arguments, i es passaran les dades obtingudes a la funció GetWeatherByCoords.
 document.getElementById("getLocation").addEventListener("click", function () {
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    navigator.geolocation.getCurrentPosition(GetWeatherByCoords, error, options);
 });
 
 /* és un esdeveniment d'onclick que s'afegeix a l'element amb l'identificador "getLocation" a 
@@ -429,7 +429,7 @@ function formatSunRiseSetHour(sunrise, sunset) {
 }
 
 //obtinc les dades meteorològiques per a les coordenades proporcionades per l'objecte pos que es passa com a paràmetre
-async function success(pos) {
+async function GetWeatherByCoords(pos) {
 
     //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
     const lat = pos.coords.latitude;
@@ -544,8 +544,8 @@ function GetWeatherByCoordsFive(latitude, longitude) {
 }
 
 
-//la crida a la funció search es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari
-async function search(cityName) {
+//la crida a la funció getWeatherByLocation es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari
+async function getWeatherByLocation(cityName) {
 
     try {
         //fetch per obtenir la informació
@@ -598,7 +598,7 @@ async function search(cityName) {
 /*La funció per veure el temps dels propers 5 dies de forma totalment diferent, així hi ha vàries formes d'obtenir i mostrar les dades
 NO ES POT OBTENIR EL TEMPS DELS PROPERS DIES SENCERS PER NOM DE CIUTAT (NOMÉS ES POT AMB LAT/LON), per tant aquí agafo el temps dels
 propers dies en periodes de 3 hores, per això la diferència entre temperatura mínima i màxima és molt lleu */
-function GetInfo(cityName) {
+function getWeatherByLocationFive(cityName) {
 
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${api.key}&units=metric`)
 .then(response => response.json())
