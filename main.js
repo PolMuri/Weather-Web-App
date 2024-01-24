@@ -330,7 +330,9 @@ function selectIdiom() {
             //una cosa o una altra
             document.getElementById("searchbox").placeholder = "Busca una localitat: ";
             //Canviar l'idioma del footer depenent de l'idioma que es seleccioni
-            document.getElementById("footerText").innerHTML = "Creat per <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("creatorText").innerHTML = "Creat per <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            //Agafo l'id posat a l'html d'aquesta part del footer per modificar-la amb JS depenent de l'idioma seleccionat
+            document.getElementById("dataText").innerHTML = "Dades d' <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
         case 'Español':
@@ -341,13 +343,15 @@ function selectIdiom() {
             //curta i específica per a modificar el valor de l'atribut "placeholder" en un element HTML, ja que el navegador té una propietat que li correspon específicament.
             //La informació que he trobat diu que es recomana usar .setAttribute per a la compatibilitat entre navegadors, mentre que .placeholder és més còmode per a aplicacions web modernes.
             document.getElementById("searchbox").placeholder = "Busca una localidad: ";
-            document.getElementById("footerText").innerHTML = "Creado por <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("creatorText").innerHTML = "Creado por <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("dataText").innerHTML = "Datos de <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
         case 'English':
             idiomaFetch = 'en';
             document.getElementById("searchbox").placeholder = "Search for a location: ";
-            document.getElementById("footerText").innerHTML = "Created by <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("creatorText").innerHTML = "Created by <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById("dataText").innerHTML = "Powered by <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
     }
     return idiomaFetch;
