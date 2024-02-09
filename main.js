@@ -160,7 +160,7 @@ function backImage(data) {
     const backUrlId = (data.weather[0].id);
     //dic que el color del text és blanc (el mateix que al CSS), així quan s'entra a l'if de Clouds i a dins a l'if de l'ID 801
     //i es canvia el color del text al negre, al anar a dins d'un altre if el color del text torna al blanc com correspón
-    document.getElementById("card").style.color = "rgb(224, 224, 230";
+    document.getElementById("card").style.color = "rgb(224, 224, 230)";
     //La funció "eliminarAnimacionsnow()" només es crida si hi ha un element 
     //amb l'id "scriptsnow" i s'eviten problemes amb la càrrega de la imatge de fons.
     //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la snow
@@ -217,6 +217,7 @@ function backImage(data) {
             document.getElementById("card").style.color = "#01081d";
         } else {
             document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
+            document.getElementById("card").style.color = "#01081d";
         }
     } else if (backUrl == 'Drizzle') {
         removeSnow();
