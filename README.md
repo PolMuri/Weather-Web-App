@@ -8,7 +8,7 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
 # Some examples in english:
 
   -Clear Sky:
-  ![1708368172844](https://github.com/PolMuri/Weather-WebApp/assets/109922379/700f0534-37db-4222-9a1e-491935d4dc86){width=150px; height=100px}
+  ![1708368172844](https://github.com/PolMuri/Weather-WebApp/assets/109922379/700f0534-37db-4222-9a1e-491935d4dc86){width=100px; height=65px}
 
   **Weather animations:**
 
