@@ -8,21 +8,21 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
 # Some examples in english:
 
   -Clear Sky:
-  ![1708368172844](https://github.com/PolMuri/Weather-WebApp/assets/109922379/700f0534-37db-4222-9a1e-491935d4dc86){width=100px; height=65px}
+  ![1708368172844](https://github.com/PolMuri/Weather-WebApp/assets/109922379/700f0534-37db-4222-9a1e-491935d4dc86)
 
   **Weather animations:**
 
   -Rain:
-  ![1708368172853](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f904e28a-3909-45ae-980d-241c0b7864b9){width=150px; height=100px}
+  ![1708368172853](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f904e28a-3909-45ae-980d-241c0b7864b9)
   
   -Snow:
-  ![1708368172906](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f5ffb44c-7ab0-4b30-bf3a-09bd7a42eed5){width=150px; height=100px}
+  ![1708368172906](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f5ffb44c-7ab0-4b30-bf3a-09bd7a42eed5)
 
   -Five days scroll:
-  ![1708368172873](https://github.com/PolMuri/Weather-WebApp/assets/109922379/ca24aff4-7428-4f19-a365-9062b0be4a06){width=150px; height=100px}
+  ![1708368172873](https://github.com/PolMuri/Weather-WebApp/assets/109922379/ca24aff4-7428-4f19-a365-9062b0be4a06)
 
 # Exemple in catalan:
-![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620){width=150px; height=100px}
+![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620)
 
 
 
