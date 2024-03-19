@@ -1,27 +1,27 @@
 
 const api = {
     //L'API key de openweathermap i la url de la api
-    key: '1e424e189616344992363ad081adfbe6',
-    url: 'https://api.openweathermap.org/data/2.5/weather'
+    key: "1e424e189616344992363ad081adfbe6",
+    url: "https://api.openweathermap.org/data/2.5/weather"
 }
 
-const card = document.getElementById('card');
+const card = document.getElementById("card");
 //hem de posar id a index html per poder obtenirlos de l'html aquí en javascript
 //per obtenir els id (o podrien ser class):
-const city = document.getElementById('city');
-const date = document.getElementById('date');
-const tempImg = document.getElementById('temp-img');
-const temp = document.getElementById('temp');
-const weather = document.getElementById('weatherType');
-const range = document.getElementById('range');
-const humidity = document.getElementById('humidity');
-const wind = document.getElementById('wind');
-const pressioAtmos = document.getElementById('pressioAtmos');
+const city = document.getElementById("city");
+const date = document.getElementById("date");
+const tempImg = document.getElementById("temp-img");
+const temp = document.getElementById("temp");
+const weather = document.getElementById("weatherType");
+const range = document.getElementById("range");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
+const pressioAtmos = document.getElementById("pressioAtmos");
 //ara mateix no utilizo la sensació tèrmica
 //const sensaTermi = document.getElementById('sensaTermi');
-const weatherImg = document.getElementById('weather-img');
-const weatherScript = document.getElementById('script');
-const sunRiseSet = document.getElementById('sunRiseSet');
+const weatherImg = document.getElementById("weather-img");
+const weatherScript = document.getElementById("script");
+const sunRiseSet = document.getElementById("sunRiseSet");
 
 //appendChild() és un mètode de l'objecte Node en JavaScript que permet afegir un nou node com a darrer fill d'un node existent. 
 //Això significa que, en aquest cas, l'element script creat dinàmicament s'afegirà com a darrer fill de l'element que es passa com a paràmetre, 
@@ -29,12 +29,12 @@ const sunRiseSet = document.getElementById('sunRiseSet');
 //modificar el codi HTML original. 
 
 //li passem l'id de search form
-const searchform = document.getElementById('search-form');
+const searchform = document.getElementById("search-form");
 //volem obtenir l'informacio dels searchbox
-const searchbox = document.getElementById('searchbox');
+const searchbox = document.getElementById("searchbox");
 //a aquest form quan hi ha un event hi farem anar una funcio
 
-searchform.addEventListener('submit', onSubmit, true);
+searchform.addEventListener("submit", onSubmit, true);
 
 //Creem la funcio de OnSubmit que rep un event
 function onSubmit(event) {
@@ -59,11 +59,11 @@ function updateImages(data) {
     // variable global o local en una funció sense importar l'àmbit del bloc. L'altra 
     //diferència entre var i let és que aquest darrer s'inicialitza a un valor només quan un 
     //analitzador ho avalua
-    let src = 'images/temp-mid.png';
+    let src = "images/temp-mid.png";
     if (temp >= 30) {
-        src = 'images/temp-high.png';
+        src = "images/temp-high.png";
     } else if (temp < 18) {
-        src = 'images/temp-low.png';
+        src = "images/temp-low.png";
     }
     //me l'injectes aquí
     tempImg.src = src;
@@ -78,21 +78,21 @@ function updateWeatherImage(data) {
     //ja que hi ha una categoria general de temps que les seves subcatgeories tenen noms diferents
     //a la categoria general i ho haig de fer per id llavors, que cada una de les subcategories té el seu
     const weatherIconID = (data.weather[0].id);
-    if (weatherIcon == 'Thunderstorm') {
-        src = 'images/storm.png';
-    } else if (weatherIcon == 'Clear') {
-        src = 'images/sun.png';
-    } else if (weatherIcon == 'Clouds') {
-        src = 'images/clouds.png';
-    } else if (weatherIcon == 'Drizzle') {
-        src = 'images/drizzle.png';
-    } else if (weatherIcon == 'Rain') {
-        src = 'images/rain.png';
-    } else if (weatherIcon == 'Snow') {
-        src = 'images/snow.png';
+    if (weatherIcon == "Thunderstorm") {
+        src = "images/storm.png";
+    } else if (weatherIcon == "Clear") {
+        src = "images/sun.png";
+    } else if (weatherIcon == "Clouds") {
+        src = "images/clouds.png";
+    } else if (weatherIcon == "Drizzle") {
+        src = "images/drizzle.png";
+    } else if (weatherIcon == "Rain") {
+        src = "images/rain.png";
+    } else if (weatherIcon == "Snow") {
+        src = "images/snow.png";
         //hi podria o hauria d'haver posat un else
     } else if (weatherIconID == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
-        src = 'images/foggy.png';
+        src = "images/foggy.png";
     }
     //m'injecta la imatge aquí de l'HTML, que és weather.img per el seu ID
     weatherImg.src = src;
@@ -166,7 +166,7 @@ function backImage(data) {
     //A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la snow
 
     //ara depenent del temps que faci tindrem una foto de background o una altra
-    if (backUrl == 'Thunderstorm') {
+    if (backUrl == "Thunderstorm") {
         removeSnow();
         //Perquè no es solapin les animacions de pluja si es van buscant llocs
         // de forma consecutiva a on plogui, elimino l'animació de snow sempre, i després la creo
@@ -186,24 +186,24 @@ function backImage(data) {
         for (let i = 0; i < comptador; i++) {
             //Dins del bucle, es crea una nova gota de pluja utilitzant la variable 
             //"rainElement" i es fa servir el mètode "createElement" per crear un element rain.
-            rainElement = document.createElement('HR');
+            rainElement = document.createElement("HR");
             //S'estableix la posició de la gota de pluja en l'eix X utilitzant la variable 
             //"espaiament" per calcular la posició correcta.
-            rainElement.style.left = (i * espaiament) + 'px';
+            rainElement.style.left = (i * espaiament) + "px";
             //S'estableix la durada de l'animació de la gota de pluja utilitzant la 
             //funció "Math.random" per generar un valor aleatori entre 0,3 i 0,6 segons.
-            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + "s";
             //Per canviar la durada de l'animació, si la vull fer més ràpida haig de baixar els valors de
             //animationDuration i pujar els de animationDelay
-            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            rainElement.style.animationDelay = Math.random() * 4 + "s";
             //S'afegeix l'element "rain" al document mitjançant el mètode "appendChild".
             document.body.appendChild(rainElement);
         }
-    } else if (backUrl == 'Clear') {
+    } else if (backUrl == "Clear") {
         removeSnow();
         removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/cel clar.png')";
-    } else if (backUrl == 'Clouds') {
+    } else if (backUrl == "Clouds") {
         removeSnow();
         removeRain();
         //Si l'id del temps és el següent vol dir que hi ha pocs núvols (few clouds: 11-25%) i per tant poso una imatge que es correspongui
@@ -219,7 +219,7 @@ function backImage(data) {
             document.getElementById("card").style.backgroundImage = "url('images/nuvols.png')";
             document.getElementById("card").style.color = "#01081d";
         }
-    } else if (backUrl == 'Drizzle') {
+    } else if (backUrl == "Drizzle") {
         removeSnow();
         removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
@@ -227,14 +227,14 @@ function backImage(data) {
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            rainElement = document.createElement('HR');
-            rainElement.style.left = (i * espaiament) + 'px';
-            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
-            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            rainElement = document.createElement("HR");
+            rainElement.style.left = (i * espaiament) + "px";
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + "s";
+            rainElement.style.animationDelay = Math.random() * 4 + "s";
             document.body.appendChild(rainElement);
         }
 
-    } else if (backUrl == 'Rain') {
+    } else if (backUrl == "Rain") {
         removeSnow();
         removeRain();
         document.getElementById("card").style.backgroundImage = "url('images/pluja.png')";
@@ -242,14 +242,14 @@ function backImage(data) {
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
         for (let i = 0; i < comptador; i++) {
-            rainElement = document.createElement('HR');
-            rainElement.style.left = (i * espaiament) + 'px';
-            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + 's';
-            rainElement.style.animationDelay = Math.random() * 4 + 's';
+            rainElement = document.createElement("HR");
+            rainElement.style.left = (i * espaiament) + "px";
+            rainElement.style.animationDuration = 0.3 + Math.random() * 0.6 + "s";
+            rainElement.style.animationDelay = Math.random() * 4 + "s";
             document.body.appendChild(rainElement);
         }
 
-    } else if (backUrl == 'Snow') {
+    } else if (backUrl == "Snow") {
         removeRain();
         removeSnow();
         document.getElementById("card").style.backgroundImage = "url('images/neu.png')";
@@ -266,20 +266,20 @@ function backImage(data) {
         //Funció que crea cada floc de snow
         function createSnow() {
             //Es crea un element DIV utilitzant el mètode "createElement" de l'objecte "document" i passant com a paràmetre "DIV".
-            snowElement = document.createElement('DIV');
+            snowElement = document.createElement("DIV");
             //Utilitzant el mètode "classList.add" s'afegeix la classe "snow" a l'element DIV creat anteriorment.
-            snowElement.classList.add('snow');
+            snowElement.classList.add("snow");
             //Utilitzant l'objecte style es assigna una posició aleatòria en l'eix x i en l'eix y a l'element DIV.
-            snowElement.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
-            snowElement.style.top = Math.floor(Math.random() * window.innerHeight) + 'px';
+            snowElement.style.left = Math.floor(Math.random() * window.innerWidth) + "px";
+            snowElement.style.top = Math.floor(Math.random() * window.innerHeight) + "px";
             //Utilitzant l'objecte l'style es defineix l'animació que es farà sobre 
             //l'element DIV, en aquest cas es defineix l'animació "cauresnow" que s'ha de definir en el CSS (@keyframes)
             snowElement.style.animationName = 'snowing';
             //Utilitzo l'style per definir la duració d'animació entre 5s i 10s i un delay entre 0s i 5s.
-            snowElement.style.animationDuration = (13 + Math.random() * 90) + 's';
+            snowElement.style.animationDuration = (13 + Math.random() * 90) + "s";
             //Afegint un event listener al element DIV, es detecta quan l'animació finalitza, 
             //esborrant així l'element i creant un de nou.
-            snowElement.addEventListener('animationend', function () {
+            snowElement.addEventListener("animationend", function () {
                 this.remove();
                 createSnow();
             });
@@ -322,8 +322,8 @@ function selectIdiom() {
     // és el que posem al case)
     let idiomaFetch;
     switch (idioma) {
-        case 'Català':
-            idiomaFetch = 'ca';
+        case "Català":
+            idiomaFetch = "ca";
             //Agafo l'element amb l'id searchbox (que és el buscador), accedeixo a .placeholder 
             //(el .placeholder és una propietat de l'objecte input en HTML que es pot accedir i modificar mitjançant JavaScript. 
             //Amb aquesta propietat es pot canviar el text que apareix dins d'un quadre d'entrada quan aquest està buit i no s'ha escrit encara cap valor)
@@ -336,8 +336,8 @@ function selectIdiom() {
             document.getElementById("dataText").innerHTML = "Dades d' <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
-        case 'Español':
-            idiomaFetch = 'es';
+        case "Español":
+            idiomaFetch = "es";
             //He decidit utilitzar aquesta sintaxi, però també es podria utilitzar: document.getElementById("searchbox").setAttribute("placeholder", "Busca una localidad: ");
             //a sintaxi .setAttribute("placeholder", "Busca una localidad: ") és una manera més general d'afegir o modificar atributs en un element HTML a través de JavaScript. 
             //Significa que es pot utilitzar per a qualsevol atribut, no només per a "placeholder". Per contra, la sintaxi .placeholder = "Busca una localidad: " és una forma més 
@@ -348,8 +348,8 @@ function selectIdiom() {
             document.getElementById("dataText").innerHTML = "Datos de <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
-        case 'English':
-            idiomaFetch = 'en';
+        case "English":
+            idiomaFetch = "en";
             document.getElementById("searchbox").placeholder = "Search for a location: ";
             document.getElementById("creatorText").innerHTML = "Created by <a rainef='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             document.getElementById("dataText").innerHTML = "Powered by <a href='https://openweathermap.org/'>OpenWeather</a>";
@@ -374,7 +374,7 @@ const options = {
 function getLocationSuccess(pos) {
     const crd = pos.coords;
     //Per consola es mostren les dades també 
-    console.log('Your current position is:');
+    console.log("Your current position is:");
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
@@ -444,7 +444,7 @@ async function GetWeatherByCoords(pos) {
     const data = await response.json();
     //amb l'id card fem que no surti el card amb la info fins que no busquem
     //la primera ciutat
-    card.style.display = 'block';
+    card.style.display = "block";
     //per assegurarnos que la data està sent passada
     //anem a remplaçar les dades que tenim per les que ens dona la api
     city.innerHTML = `${data.name}, ${data.sys.country}`;
@@ -463,7 +463,7 @@ async function GetWeatherByCoords(pos) {
     //primer declaro la variable idiomSun (amb el let ja que el seu valor es pot modificar posteriorment) que tindra el resultat que retorna la funció selectIdiom()
     let idiomSun = selectIdiom();
     //depenent de l'idioma que em retorni la funció selectIdiom escric quan surt i es pon el sol en un idioma o un altre
-    if (idiomSun === 'ca') {
+    if (idiomSun === "ca") {
         //s'envien els valors data.sys.sunrise, data.sys.sunset a la funció formatSunRiseSetHour, aquesta processa aquests valors en format UNIX que contenen
         //la hora en que surt i es pon el sol, i la mateixa funció amb el .formattedSunrise o .formattedSunset retorna el valor caluclat en la funció formatSunRiseSetHour
         //que serà o bé la hora en que surt o es pon el sol en format comprensible (hores normals)
@@ -473,7 +473,7 @@ async function GetWeatherByCoords(pos) {
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
 
-    } else if (idiomSun === 'es') {
+    } else if (idiomSun === "es") {
         sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
@@ -561,7 +561,7 @@ async function getWeatherByLocation(cityName) {
         const data = await response.json();
         //amb l'id card fem que no surti el card amb la info fins que no busquem
         //la primera ciutat
-        card.style.display = 'block';
+        card.style.display = "block";
         //per assegurarnos que la data està sent passada
         //anem a remplaçar les dades que tenim per les que ens dona la api
         city.innerHTML = `${data.name}, ${data.sys.country}`;
@@ -574,11 +574,11 @@ async function getWeatherByLocation(cityName) {
         pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
         //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
         let idiomSun = selectIdiom();
-        if (idiomSun === 'ca') {
+        if (idiomSun === "ca") {
             sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-        } else if (idiomSun === 'es') {
+        } else if (idiomSun === "es") {
             sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
           <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
             ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
