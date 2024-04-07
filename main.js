@@ -171,7 +171,7 @@ function backImage(data) {
         //Perquè no es solapin les animacions de pluja si es van buscant llocs
         // de forma consecutiva a on plogui, elimino l'animació de snow sempre, i després la creo
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/tempesta.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/tempesta.webp')";
         //ANIMACIÓ DE PLUJA EXPLICADA
         //Es crea una variable anomenada "rainElement" per a ser utilitzada per a crear cada gota de pluja.
         let rainElement;
@@ -202,27 +202,27 @@ function backImage(data) {
     } else if (backUrl == 'Clear') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/cel clar.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/cel clar.webp')";
     } else if (backUrl == 'Clouds') {
         removeSnow();
         removeRain();
         //Si l'id del temps és el següent vol dir que hi ha pocs núvols (few clouds: 11-25%) i per tant poso una imatge que es correspongui
         if (backUrlId == 801) {
-            document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.jpg')";
+            document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.webp')";
             //Pinto el text de color negre perquè es vegi bé amb aquesta imatge
             document.getElementById("card").style.color = "#01081d";
             //Núvols del 26-50%
         } else if (backUrlId == 802) {
-            document.getElementById("card").style.backgroundImage = "url('images/nuvolositat variable.jpg')";
+            document.getElementById("card").style.backgroundImage = "url('images/nuvolositat variable.webp')";
             document.getElementById("card").style.color = "#01081d";
         } else {
-            document.getElementById("card").style.backgroundImage = "url('images/nuvols.jpg')";
+            document.getElementById("card").style.backgroundImage = "url('images/nuvols.webp')";
             document.getElementById("card").style.color = "#01081d";
         }
     } else if (backUrl == 'Drizzle') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/pluja.webp')";
         let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
@@ -237,7 +237,7 @@ function backImage(data) {
     } else if (backUrl == 'Rain') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/pluja.webp')";
         let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
@@ -252,7 +252,7 @@ function backImage(data) {
     } else if (backUrl == 'Snow') {
         removeRain();
         removeSnow();
-        document.getElementById("card").style.backgroundImage = "url('images/neu.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/neu.webp')";
         //FUNCIÓ CREACIÓ ANIMACIÓ DE snow EXPLICADA
         //Crea 15 flocs de snow que apareixen en una posició aleatòria de la pantalla, 
         //amb una animació de caure i una duració i delay aleatori, i una vegada finalitza la animació es crea un de nou.
@@ -299,7 +299,7 @@ function backImage(data) {
     } else if (backUrl == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/boira.jpg')";
+        document.getElementById("card").style.backgroundImage = "url('images/boira.webp')";
     }
 }
 
