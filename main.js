@@ -446,7 +446,7 @@ async function GetWeatherByCoords(pos) {
         const lon = pos.coords.longitude;
 
         // Obtenir el nom de la ciutat utilitzant les coordenades a través del Reverse Geocoding
-        const reverseGeoResponse = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${api.key}`);
+        const reverseGeoResponse = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${api.key}`);
         const reverseGeoData = await reverseGeoResponse.json();
 
         // Assegura't que la crida a l'API va bé i que la resposta conté el nom de la ciutat
