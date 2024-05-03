@@ -2,7 +2,7 @@
 const api = {
     //L'API key de openweathermap i la url de la api
     key: '1e424e189616344992363ad081adfbe6',
-    url: 'https://api.openweathermap.org/data/2.5/weather'
+    url: 'https://api.openweathermap.org/data/3.0/onecall'
 }
 
 const card = document.getElementById('card');
@@ -50,9 +50,9 @@ function onSubmit(event) {
     getWeatherByLocationFive(searchbox.value);
 }
 
-//basat en la temperatura, posem una imatge o una altra
-function updateImages(data) {
-    const temp = (data.main.temp);
+//Basat en la temperatura, posem una imatge o una altra
+function updateImages(responseData) {
+    const temp = (responseData.current.temp);
     //variable que funciona a dins d'aquesta funció
     //let us permet declarar variables limitant el vostre abast (scope) al bloc, declaració,
     // o expressió on s'està usant.a diferència de la paraula clau var la qual defineix una
@@ -69,15 +69,18 @@ function updateImages(data) {
     tempImg.src = src;
 }
 
-//depenent del temps que faci, posem una imatge o una altra com a icone que acompanya l'estat del temps
+//depenent del temps que faci, posem una imatge o una altra com a icona que acompanya l'estat del temps
 function updateWeatherImage(data) {
-    //les dades tretes d'aquí, que em doenn les categories generals del temps
-    //i hi veig si és categoria de pluja, núvols , etc per posar l'icone corresponent
-    const weatherIcon = (data.weather[0].main);
+    // les dades tretes d'aquí, que em donen les categories generals del temps
+    // i hi veig si és categoria de pluja, núvols , etc per posar l'icone corresponent
+    // accedim a les dades del temps dins de l'objecte 'current'
+    const weatherIcon = (data.current.weather[0].main);
     //les dades tretes per categoria, però no per nom com la variable anterior, si no per id
     //ja que hi ha una categoria general de temps que les seves subcatgeories tenen noms diferents
     //a la categoria general i ho haig de fer per id llavors, que cada una de les subcategories té el seu
-    const weatherIconID = (data.weather[0].id);
+    const weatherIconID = (data.current.weather[0].id);
+    console.log(weatherIcon)
+    console.log(weatherIconID)
     if (weatherIcon == 'Thunderstorm') {
         src = 'images/storm.png';
     } else if (weatherIcon == 'Clear') {
@@ -91,7 +94,7 @@ function updateWeatherImage(data) {
     } else if (weatherIcon == 'Snow') {
         src = 'images/snow.png';
         //hi podria o hauria d'haver posat un else
-    } else if (weatherIconID == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
+    } else if (weatherIconID >= 701 && weatherIconID <= 781) {
         src = 'images/foggy.png';
     }
     //m'injecta la imatge aquí de l'HTML, que és weather.img per el seu ID
@@ -155,11 +158,12 @@ function eliminarAnimacionsnow() {
 
 
 function backImage(data) {
-    //trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
-    const backUrl = (data.weather[0].main);
-    const backUrlId = (data.weather[0].id);
-    //dic que el color del text és blanc (el mateix que al CSS), així quan s'entra a l'if de Clouds i a dins a l'if de l'ID 801
-    //i es canvia el color del text al negre, al anar a dins d'un altre if el color del text torna al blanc com correspón
+    // Accedim al temps actual dins de l'objecte 'current'
+    const currentWeather = data.current.weather[0];
+    // Trec les dades per saber el temps general que fa sense grans concrecions i ho guardo a una variable (backUrl)
+    const backUrl = currentWeather.main;
+    const backUrlId = currentWeather.id;
+    // Dic que el color del text és blanc (el mateix que al CSS)
     document.getElementById("card").style.color = "rgb(224, 224, 230)";
     //La funció "eliminarAnimacionsnow()" només es crida si hi ha un element 
     //amb l'id "scriptsnow" i s'eviten problemes amb la càrrega de la imatge de fons.
@@ -434,207 +438,103 @@ function formatSunRiseSetHour(sunrise, sunset) {
 }
 
 //obtinc les dades meteorològiques per a les coordenades proporcionades per l'objecte pos que es passa com a paràmetre
+// En resum, la funció GetWeatherByCoords(pos) és la que s'encarrega d'obtenir i mostrar les dades meteorològiques 
+// basades en les coordenades de geolocalització rebudes de l'usuari a través de la funció getLocationSuccess(pos).
 async function GetWeatherByCoords(pos) {
-
-    //Agafo la longitud i la latitud obtingudes amb la funció getLocationSuccess i les guardo a les variables creades lat i lon
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
-    //la mateixa crida a la api que a la funció d'abaix, però en comptes d'extreure les dades per nom de població, es fa per geolocalització (latitud i longitud)
-    const response = await fetch(`${api.url}?lat=${lat}&lon=${lon}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
-    const data = await response.json();
-    //amb l'id card fem que no surti el card amb la info fins que no busquem
-    //la primera ciutat
-    card.style.display = 'block';
-    //per assegurarnos que la data està sent passada
-    //anem a remplaçar les dades que tenim per les que ens dona la api
-    city.innerHTML = `${data.name}, ${data.sys.country}`;
-    date.innerHTML = (new Date()).toLocaleDateString();
-    //la funció .to.Fixed l'afegeixo jo al final de les dades que busco per arrodonir les dades que rebo de la api
-    //entre parèntesis hi ha el nombre de decimals als quals vull que m'ho arrodoneixi
-    temp.innerHTML = `${(data.main.temp.toFixed(1))} ºC`;
-    weather.innerHTML = data.weather[0].description;
-    range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
-    humidity.innerHTML = `Hum: ${data.main.humidity}%`;
-    wind.innerHTML = `Vel: ${data.wind.speed} Met./seg.`;
-    pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
-    //Ara mateix no utilitzo la sensació tèrmica
-    //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
-
-    //primer declaro la variable idiomSun (amb el let ja que el seu valor es pot modificar posteriorment) que tindra el resultat que retorna la funció selectIdiom()
-    let idiomSun = selectIdiom();
-    //depenent de l'idioma que em retorni la funció selectIdiom escric quan surt i es pon el sol en un idioma o un altre
-    if (idiomSun === 'ca') {
-        //s'envien els valors data.sys.sunrise, data.sys.sunset a la funció formatSunRiseSetHour, aquesta processa aquests valors en format UNIX que contenen
-        //la hora en que surt i es pon el sol, i la mateixa funció amb el .formattedSunrise o .formattedSunset retorna el valor caluclat en la funció formatSunRiseSetHour
-        //que serà o bé la hora en que surt o es pon el sol en format comprensible (hores normals)
-        //com es pot veure S'utilitza la notació de punt per accedir a les propietats formattedSunrise i formattedSunset de l'objecte retornat, 
-        //que contenen les cadenes formatejades corresponents a l'hora que surt el sol i quan es pon, respectivament.
-        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-
-    } else if (idiomSun === 'es') {
-        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-    } else {
-        sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-    }
-
-    //basat en la temperatura, posem una imatge o una altra
-    //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
-    updateImages(data);
-    updateWeatherImage(data);
-    backImage(data);
-    //natejem el nom de la ciutat buscada amb aquesta funció
-    clearName();
-}
-
-//Funció per mostrar el temps de 5 dies depenent de la geolocalització
-function GetWeatherByCoordsFive(latitude, longitude) {
-    // es fa una petició fetch a l'API de OpenWeatherMap amb les coordenades proporcionades per obtenir les dades de la previsió del temps per a la ubicació desitjada els propers dies. 
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric
-    `)
-    .then(response => response.json())
-    .then(data => {
-
-        //Temperatura mínima i màxima del dia
-        //El toFixed(1) és per arrodonir i mostrar només un decimal
-        for (i = 0; i < 5; i++) {
-            const minTemp = data.daily[i].temp.min.toFixed(1);
-            const maxTemp = data.daily[i].temp.max.toFixed(1);
-            document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + minTemp + "ºC";
-            document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + maxTemp + "ºC";
-        }
-        
-          
-
-        /*A cada iteració del bucle, es defineixen dues variables: iconCode i imgElement. La variable iconCode es defineix com l'icona del temps corresponent a 
-        cada dia, que s'obté a partir de l'objecte "daily" retornat per la crida a la API. La info s'obté mitjançant la propietat "weather" d'aquest objecte, 
-        que és un array que conté informació sobre les condicions atmosfèriques de cada dia. Només s'agafa la primera posició d'aquest array perquè és l'icone
-        La variable imgElement és l'element HTML on s'ha de mostrar l'icona del temps per a cada dia. Aquest element es defineix mitjançant el seu ID, 
-        que es construeix amb l'string "img" seguida del número de dia corresponent:per exemple, "img1" per al primer dia, etc*/
-        for(i = 0; i < 5; i++) {
-            var iconCode = data.daily[i].weather[0].icon;
-            var imgElement = document.getElementById("img" + (i + 1));
-            
-            if (iconCode === "01d" || iconCode === "01n") {
-              imgElement.src = "images/sun.png";
-            } else if (iconCode === "02d" || iconCode === "02n") {
-              imgElement.src = "images/few clouds.png";
-            } else if (iconCode === "03d" || iconCode === "03n") {
-              imgElement.src = "images/clouds.png";
-            } else if (iconCode === "04d" || iconCode === "04n") {
-              imgElement.src = "images/clouds.png";
-            } else if (iconCode === "09d" || iconCode === "09n") {
-              imgElement.src = "images/drizzle.png";
-            } else if (iconCode === "10d" || iconCode === "10n") {
-              imgElement.src = "images/rain.png";
-            } else if (iconCode === "11d" || iconCode === "11n") {
-                imgElement.src = "images/storm.png";
-            } else if (iconCode === "13d" || iconCode === "13n") {
-                imgElement.src = "images/snow.png";
-            } else if (iconCode === "50d" || iconCode === "50n") {
-                imgElement.src = "images/foggy.png";
-            } else {
-              imgElement.src = "images/sun.png";
-            }
-          }
-       
-    })
-    //Si no es poden obtenir les dades saltarà aquest error, només poso l'error a la funció dels 5 dies perquè salti només una vegada
-    .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"));
-}
-
-
-//la crida a la funció getWeatherByLocation es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari
-async function getWeatherByLocation(cityName) {
-
     try {
-        //fetch per obtenir la informació
-        //agafem la url per buscar, la q per buscar el pais o ciutat i a 
-        //part li passem la clau de l'api i l'idioma amb la funcio selectIdiom(),
-        const response = await fetch(`${api.url}?q=${cityName}&appid=${api.key}&lang=${selectIdiom()}&units=metric`);
-        //per obtenir la data
-        const data = await response.json();
-        //amb l'id card fem que no surti el card amb la info fins que no busquem
-        //la primera ciutat
-        card.style.display = 'block';
-        //per assegurarnos que la data està sent passada
-        //anem a remplaçar les dades que tenim per les que ens dona la api
-        city.innerHTML = `${data.name}, ${data.sys.country}`;
-        date.innerHTML = (new Date()).toLocaleDateString();
-        temp.innerHTML = `${(data.main.temp.toFixed(1))} ºC`;
-        weather.innerHTML = data.weather[0].description;
-        range.innerHTML = `Temp min/max: ${(data.main.temp_min.toFixed(1))} ºC / ${(data.main.temp_max.toFixed(1))} ºC`;
-        humidity.innerHTML = `Hum: ${data.main.humidity}%`;
-        wind.innerHTML = `Vel: ${data.wind.speed} Met./seg.`;
-        pressioAtmos.innerHTML = `Pres. Atmos: ${data.main.pressure} hPa`;
-        //sensaTermi.innerHTML = `Sens. Term: ${data.main.feels_like} ºC`;
-        let idiomSun = selectIdiom();
-        if (idiomSun === 'ca') {
-            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-        } else if (idiomSun === 'es') {
-            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-        } else {
-            sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunrise}
-          <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
-            ${formatSunRiseSetHour(data.sys.sunrise, data.sys.sunset).formattedSunset}`;
-        }
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
 
-        //basat en la temperatura, posem una imatge o una altra
-        //i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
-        updateImages(data);
-        updateWeatherImage(data);
-        backImage(data);
-        //natejem el nom de la ciutat buscada amb aquesta funció
-        clearName();
+        // Obtenir el nom de la ciutat utilitzant les coordenades a través del Reverse Geocoding
+        const reverseGeoResponse = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${api.key}`);
+        const reverseGeoData = await reverseGeoResponse.json();
+
+        // Assegura't que la crida a l'API va bé i que la resposta conté el nom de la ciutat
+        if (reverseGeoData && reverseGeoData.length > 0 && reverseGeoData[0].name) {
+            const cityName = reverseGeoData[0].name;
+
+            // Obtenir les dades meteorològiques utilitzant les coordenades
+            const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=${selectIdiom()}&appid=${api.key}`);
+            const responseData = await response.json();
+
+            // Mostrar les dades a la interfície d'usuari
+            card.style.display = 'block';
+            city.innerHTML = cityName;
+            date.innerHTML = (new Date()).toLocaleDateString();
+            temp.innerHTML = `${(responseData.current.temp.toFixed(1))} ºC`;
+            weather.innerHTML = responseData.current.weather[0].description;
+            range.innerHTML = `Temp min/max: ${(responseData.daily[0].temp.min.toFixed(1))} ºC / ${(responseData.daily[0].temp.max.toFixed(1))} ºC`;
+            humidity.innerHTML = `Hum: ${responseData.current.humidity}%`;
+            wind.innerHTML = `Vel: ${responseData.current.wind_speed} Met./seg.`;
+            pressioAtmos.innerHTML = `Pres. Atmos: ${responseData.current.pressure} hPa`;
+
+            //primer declaro la variable idiomSun (amb el let ja que el seu valor es pot modificar posteriorment) que tindra el resultat que retorna la funció selectIdiom()
+            let idiomSun = selectIdiom();
+            //depenent de l'idioma que em retorni la funció selectIdiom escric quan surt i es pon el sol en un idioma o un altre
+            if (idiomSun === 'ca') {
+                //s'envien els valors data.sys.sunrise, data.sys.sunset a la funció formatSunRiseSetHour, aquesta processa aquests valors en format UNIX que contenen
+                //la hora en que surt i es pon el sol, i la mateixa funció amb el .formattedSunrise o .formattedSunset retorna el valor caluclat en la funció formatSunRiseSetHour
+                //que serà o bé la hora en que surt o es pon el sol en format comprensible (hores normals)
+                //com es pot veure S'utilitza la notació de punt per accedir a les propietats formattedSunrise i formattedSunset de l'objecte retornat, 
+                //que contenen les cadenes formatejades corresponents a l'hora que surt el sol i quan es pon, respectivament.
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            } else if (idiomSun === 'es') {
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            } else {
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            }
+
+            // Basat en la temperatura, posem una imatge o una altra
+            // i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
+            updateImages(responseData);
+            updateWeatherImage(responseData);
+            backImage(responseData);
+            // Netejem el nom de la ciutat buscada amb aquesta funció
+            clearName();
+        } else {
+            console.error('No s\'ha pogut obtenir el nom de la ciutat');
+        }
     } catch (err) {
-        //No hi poso missatge, faig que només surti al cridar el temps dels 5 dies per no duplicar el missatge d'error que rep l'usuari
+        console.error('Error:', err);
     }
 }
 
-/*La funció per veure el temps dels propers 5 dies de forma totalment diferent, així hi ha vàries formes d'obtenir i mostrar les dades
-NO ES POT OBTENIR EL TEMPS DELS PROPERS DIES SENCERS PER NOM DE CIUTAT (NOMÉS ES POT AMB LAT/LON), per tant aquí agafo el temps dels
-propers dies en periodes de 3 hores, per això la diferència entre temperatura mínima i màxima és molt lleu */
-function getWeatherByLocationFive(cityName) {
 
-fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${api.key}&units=metric`)
-.then(response => response.json())
-.then(data => {
 
-    //Temperatura mínima i màxima del dia aquí es fa amb una llista en comptes d'amb un array com quna va per lat i lon
-    for (i = 0; i < 5; i++) {
-        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min).toFixed(1) + "ºC";
-    }
-      
-    for (i = 0; i < 5; i++) {
-        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max).toFixed(1) + "ºC";
-    }
-
-    //Posar els icones adequats a cada temps, aquí es fa amb una llista en comptes d'amb un array
-    for(i = 0; i < 5; i++) {
-        var iconCode = data.list[i].weather[0].icon;
-        var imgElement = document.getElementById("img" + (i + 1));
-        
+// Funció per processar les dades de previsió del temps
+function processWeatherData(data) {
+    // Recorre les dades meteorològiques per als propers 5 dies
+    for (let i = 0; i < 5; i++) {
+        // Obté i arrodoneix la temperatura mínima per al dia actual i la converteix en string amb una decimal
+        const minTemp = data.daily[i].temp.min.toFixed(1);
+        // Obté i arrodoneix la temperatura màxima per al dia actual i la converteix en string amb una decimal
+        const maxTemp = data.daily[i].temp.max.toFixed(1);
+        // Actualitza el contingut HTML dels elements d'etiqueta "span" per mostrar la temperatura mínima i màxima
+        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + minTemp + "ºC";
+        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + maxTemp + "ºC";
+       // Obté el codi de la icona del temps per al dia actual
+        const iconCode = data.daily[i].weather[0].icon;
+        // Obté l'element de la imatge corresponent a l'índex actual (del dia)
+        const imgElement = document.getElementById("img" + (i + 1));
+        // Assigna la icona corresponent basada en el codi de l'ícona proporcionat per l'API
         if (iconCode === "01d" || iconCode === "01n") {
-          imgElement.src = "images/sun.png";
+            imgElement.src = "images/sun.png";
         } else if (iconCode === "02d" || iconCode === "02n") {
-          imgElement.src = "images/few clouds.png";
+            imgElement.src = "images/few clouds.png";
         } else if (iconCode === "03d" || iconCode === "03n") {
-          imgElement.src = "images/clouds.png";
+            imgElement.src = "images/clouds.png";
         } else if (iconCode === "04d" || iconCode === "04n") {
-          imgElement.src = "images/clouds.png";
+            imgElement.src = "images/clouds.png";
         } else if (iconCode === "09d" || iconCode === "09n") {
-          imgElement.src = "images/drizzle.png";
+            imgElement.src = "images/drizzle.png";
         } else if (iconCode === "10d" || iconCode === "10n") {
-          imgElement.src = "images/rain.png";
+            imgElement.src = "images/rain.png";
         } else if (iconCode === "11d" || iconCode === "11n") {
             imgElement.src = "images/storm.png";
         } else if (iconCode === "13d" || iconCode === "13n") {
@@ -642,16 +542,153 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${ap
         } else if (iconCode === "50d" || iconCode === "50n") {
             imgElement.src = "images/foggy.png";
         } else {
-          imgElement.src = "images/sun.png";
+            imgElement.src = "images/sun.png";
         }
-      }
-      
-})
+    }
+}
 
-.catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"))
+// Funció per obtenir les dades del temps pels propers 5 dies a partir de la geolocalització
+function GetWeatherByCoordsFive(latitude, longitude) {
+    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric`)
+    .then(response => response.json())
+    .then(data => {
+        processWeatherData(data); // Processar les dades de previsió del temps
+    })
+    .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"));
 }
 
 
+// Funció asíncrona per fer la crida a l'API de geolocalització utilitzant el nom de la ciutat
+async function getCoordinatesByCityName(cityName) {
+    // Realitza una crida a l'API de geolocalització utilitzant el nom de la ciutat proporcionat
+    const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api.key}`);
+    // Espera la resposta de la crida i la converteix en format JSON
+    const data = await response.json();
+    // Comprova si s'ha obtingut alguna dada vàlida de geolocalització
+    // Si s'ha obtingut, retorna un objecte amb les coordenades de latitud i longitud
+    // Si no s'ha obtingut cap dada, retorna null
+    return data.length > 0 ? { lat: data[0].lat, lon: data[0].lon } : null;
+}
+
+
+// Funció per obtenir el temps actual per una ubicació específica
+async function getWeatherByLocation(cityName) {
+    try {
+        // Crida a la funció per obtenir les coordenades de la ciutat
+        const coordinates = await getCoordinatesByCityName(cityName);
+
+        if (coordinates) {
+            const { lat, lon } = coordinates;
+            // Ara pots fer servir aquestes coordenades per fer la crida a la nova API One Call 3.0
+            // Exemple: getWeatherData(lat, lon);
+
+            // fetch per obtenir la informació de l'API One Call 3.0
+            const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=${selectIdiom()}&appid=${api.key}`);
+            const responseData = await response.json(); // Converteix la resposta a JSON
+
+            // Amb l'id card fem que no surti el card amb la info fins que no busquem la primera ciutat
+            card.style.display = 'block';
+
+            // Substitueix les dades de la API 2.5 per les de la API 3.0
+            city.innerHTML = cityName;
+            date.innerHTML = (new Date()).toLocaleDateString();
+            temp.innerHTML = `${(responseData.current.temp.toFixed(1))} ºC`;
+            weather.innerHTML = responseData.current.weather[0].description;
+            range.innerHTML = `Temp min/max: ${(responseData.daily[0].temp.min.toFixed(1))} ºC / ${(responseData.daily[0].temp.max.toFixed(1))} ºC`;
+            humidity.innerHTML = `Hum: ${responseData.current.humidity}%`;
+            wind.innerHTML = `Vel: ${responseData.current.wind_speed} Met./seg.`;
+            pressioAtmos.innerHTML = `Pres. Atmos: ${responseData.current.pressure} hPa`;
+
+            // Afegeixes la lògica per a l'hora dels sols
+            let idiomSun = selectIdiom();
+            if (idiomSun === 'ca') {
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            } else if (idiomSun === 'es') {
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            } else {
+                sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
+                <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
+                ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+            }
+
+            // Basat en la temperatura, posem una imatge o una altra
+            // i el mateix amb el temps que faci i amb això li posaré també una imatge de fons o una altra
+            updateImages(responseData);
+            updateWeatherImage(responseData);
+            backImage(responseData);
+            // Netejem el nom de la ciutat buscada amb aquesta funció
+            clearName();
+        } else {
+            console.error('Població no trobada');
+        }
+    } catch (err) {
+        // No hi poso missatge, faig que només surti al cridar el temps dels 5 dies per no duplicar el missatge d'error que rep l'usuari
+    }
+}
+
+
+// Funció per obtenir el temps dels propers 5 dies per una ubicació específica
+async function getWeatherByLocationFive(cityName) {
+    try {
+        // Obtenir les coordenades de la ciutat
+        const coordinates = await getCoordinatesByCityName(cityName);
+
+        if (coordinates) {
+            const { lat, lon } = coordinates;
+            // Fer la crida a l'API One Call 3.0 amb les coordenades obtingudes
+            const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric`);
+            const data = await response.json();
+            processWeatherData(data); // Processar les dades de previsió del temps
+        } else {
+            console.error('Població no trobada');
+        }
+    } catch (err) {
+        console.error('Error en obtenir les dades del temps', err);
+        // Aquí pots mostrar un missatge d'error a l'usuari si és necessari
+    }
+}
+
+// Funció per processar les dades meteorològiques i mostrar-les
+function processWeatherData(data) {
+    // Bucle per processar les dades dels propers 5 dies
+    for (let i = 0; i < 5; i++) {
+        // Obté les temperatures mínima i màxima del dia i les mostra a la interfície d'usuari
+        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.daily[i].temp.min).toFixed(1) + "ºC";
+        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.daily[i].temp.max).toFixed(1) + "ºC";
+        // Obté el codi de l'icona del temps per a cada dia
+        const iconCode = data.daily[i].weather[0].icon;
+        // Obté l'element de la imatge corresponent a cada dia
+        const imgElement = document.getElementById("img" + (i + 1));
+
+        // Assigna una imatge adequada en funció del codi de l'icona del temps
+        // La imatge mostra les condicions meteorològiques previstes per al dia
+        if (iconCode === "01d" || iconCode === "01n") {
+            imgElement.src = "images/sun.png";
+        } else if (iconCode === "02d" || iconCode === "02n") {
+            imgElement.src = "images/few clouds.png";
+        } else if (iconCode === "03d" || iconCode === "03n") {
+            imgElement.src = "images/clouds.png";
+        } else if (iconCode === "04d" || iconCode === "04n") {
+            imgElement.src = "images/clouds.png";
+        } else if (iconCode === "09d" || iconCode === "09n") {
+            imgElement.src = "images/drizzle.png";
+        } else if (iconCode === "10d" || iconCode === "10n") {
+            imgElement.src = "images/rain.png";
+        } else if (iconCode === "11d" || iconCode === "11n") {
+            imgElement.src = "images/storm.png";
+        } else if (iconCode === "13d" || iconCode === "13n") {
+            imgElement.src = "images/snow.png";
+        } else if (iconCode === "50d" || iconCode === "50n") {
+            imgElement.src = "images/foggy.png";
+        } else {
+            imgElement.src = "images/sun.png"; //Defecte: si el codi de l'icona no coincideix amb cap dels casos anteriors, es mostra una imatge de sol per defecte
+        }
+    }
+}
 
 //Aconseguim el número correcte que es correspon al dia correcte
 /*S'afegeix el número del dia actual (obtingut a través de la funció getDay() que retorna un número del 0 al 6 representant diumenge a dissabte) al número del dia que es vol consultar. 
