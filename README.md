@@ -26,7 +26,7 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
 ![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620)
 
 
-## In May 2024, we have updated our integration with the OpenWeatherMap API from version 2.5 to version 3.0.
+## In May 2024, we have updated our integration with the OpenWeatherMap API from version One Call API 2.5 to version One Call API 3.0.
 
 This update brings along a series of significant improvements that benefit both our platform and our users
 
