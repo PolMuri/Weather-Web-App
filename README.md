@@ -13,8 +13,8 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
   **Weather animations:**
 
   -Rain:
-  ![1708368172853](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f904e28a-3909-45ae-980d-241c0b7864b9)
-  
+![image](https://github.com/PolMuri/Weather-WebApp/assets/109922379/c5ca7114-80b9-43f0-93c4-ce60002e1d53)
+
   -Snow:
   ![1708368172906](https://github.com/PolMuri/Weather-WebApp/assets/109922379/f5ffb44c-7ab0-4b30-bf3a-09bd7a42eed5)
 
