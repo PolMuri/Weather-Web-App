@@ -26,6 +26,13 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
 ![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620)
 
 
+## In May 2024, we have updated our integration with the OpenWeatherMap API from version 2.5 to version 3.0.
+
+This update brings along a series of significant improvements that benefit both our platform and our users
+
+In addition to the update to version 3.0 of the OpenWeatherMap API, we have also incorporated the OpenWeatherMap Geocoding API into our platform. This API allows us to convert geographical addresses into geographical coordinates (latitude and longitude) and vice versa, expanding the geolocation capabilities of our platform and enhancing the accuracy of our location-related services.
+
+
 
 
   
