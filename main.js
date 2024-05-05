@@ -5,9 +5,9 @@ const api = {
     url: 'https://api.openweathermap.org/data/3.0/onecall'
 }
 
-const card = document.getElementById('card');
 //hem de posar id a index html per poder obtenirlos de l'html aquí en javascript
 //per obtenir els id (o podrien ser class):
+const card = document.getElementById('card');
 const city = document.getElementById('city');
 const date = document.getElementById('date');
 const tempImg = document.getElementById('temp-img');
@@ -156,7 +156,7 @@ function eliminarAnimacionsnow() {
 
 */
 
-
+// Depèn del temps que faci posem una imatge de background o una altra
 function backImage(data) {
     // Accedim al temps actual dins de l'objecte 'current'
     const currentWeather = data.current.weather[0];
@@ -312,8 +312,7 @@ const clearName = () => {
     searchbox.value = "";
 }
 
-//a l'html hi ha l'onchange al select, que dirigeix a la funcio selectIdiom
-
+//A l'html hi ha l'onchange al select, que dirigeix a la funcio selectIdiom
 function selectIdiom() {
     //extreiem per id del select (Llenguatges) les dades
     //el .value és perquè són les dades de l'apartat value del select a l'html
@@ -437,7 +436,7 @@ function formatSunRiseSetHour(sunrise, sunset) {
     }
 }
 
-//obtinc les dades meteorològiques per a les coordenades proporcionades per l'objecte pos que es passa com a paràmetre
+// Obtinc les dades meteorològiques per a les coordenades proporcionades per l'objecte pos que es passa com a paràmetre
 // En resum, la funció GetWeatherByCoords(pos) és la que s'encarrega d'obtenir i mostrar les dades meteorològiques 
 // basades en les coordenades de geolocalització rebudes de l'usuari a través de la funció getLocationSuccess(pos).
 async function GetWeatherByCoords(pos) {
@@ -505,9 +504,7 @@ async function GetWeatherByCoords(pos) {
     }
 }
 
-
-
-// Funció per processar les dades de previsió del temps
+// Funció per processar les dades de previsió meteorològiques dels propers 5 dies i mostrar-les
 function processWeatherData(data) {
     // Recorre les dades meteorològiques per als propers 5 dies
     for (let i = 0; i < 5; i++) {
