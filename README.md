@@ -17,6 +17,7 @@ Live demo: https://polmuri.github.io/Weather-WebApp/
 ![image](https://github.com/PolMuri/Weather-WebApp/assets/109922379/c5ca7114-80b9-43f0-93c4-ce60002e1d53)
 
   -Snow:
+  
   ![image](https://github.com/PolMuri/Weather-WebApp/assets/109922379/51cd0b0d-a6d2-4efa-9269-79b85af6988a)
 
   -Five days scroll:
