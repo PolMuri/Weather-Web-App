@@ -1,6 +1,6 @@
 
 const api = {
-    //L'API key de openweathermap i la url de la api
+    //L'API key d'openweathermap i la url de l'api
     key: '1e424e189616344992363ad081adfbe6',
     url: 'https://api.openweathermap.org/data/3.0/onecall'
 }
