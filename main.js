@@ -45,7 +45,7 @@ function onSubmit(event) {
     //la crida a la funció getWeatherByLocation es fa des de la funció onSubmit, que s'executa quan l'usuari envia el formulari, 
     //en aquesta crida, s'hi passa el valor que l'usuari ha escrit dins la casella de cerca, que es guarda a la variable searchbox.value
     //i es passa com a argument a la funció getWeatherByLocation(cityName)
-    getWeatherByLocation(searchbox.value);
+    getWeatherByName(searchbox.value);
     //Funció per obtenir el temps dels propers 5 dies
     getWeatherByLocationFive(searchbox.value);
 }
@@ -505,10 +505,11 @@ async function GetWeatherByCoords(pos) {
 }
 
 // Funció per processar les dades de previsió meteorològiques dels propers 5 dies i mostrar-les
-function processWeatherData(data) {
+function processWeatherDataFive(data) {
     // Recorre les dades meteorològiques per als propers 5 dies
     for (let i = 0; i < 5; i++) {
         // Obté i arrodoneix la temperatura mínima per al dia actual i la converteix en string amb una decimal
+        // Utilitzem const perquè minTemp i maxTemps no canvien dins de l'iteració
         const minTemp = data.daily[i].temp.min.toFixed(1);
         // Obté i arrodoneix la temperatura màxima per al dia actual i la converteix en string amb una decimal
         const maxTemp = data.daily[i].temp.max.toFixed(1);
@@ -539,6 +540,7 @@ function processWeatherData(data) {
         } else if (iconCode === "50d" || iconCode === "50n") {
             imgElement.src = "images/foggy.png";
         } else {
+            //Per defecte: si el codi de l'icona no coincideix amb cap dels casos anteriors, es mostra una imatge de sol per defecte
             imgElement.src = "images/sun.png";
         }
     }
@@ -549,7 +551,7 @@ function GetWeatherByCoordsFive(latitude, longitude) {
     fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric`)
     .then(response => response.json())
     .then(data => {
-        processWeatherData(data); // Processar les dades de previsió del temps
+        processWeatherDataFive(data); // Processar les dades de previsió del temps
     })
     .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"));
 }
@@ -569,7 +571,7 @@ async function getCoordinatesByCityName(cityName) {
 
 
 // Funció per obtenir el temps actual per una ubicació específica
-async function getWeatherByLocation(cityName) {
+async function getWeatherByName(cityName) {
     try {
         // Crida a la funció per obtenir les coordenades de la ciutat
         const coordinates = await getCoordinatesByCityName(cityName);
@@ -639,51 +641,13 @@ async function getWeatherByLocationFive(cityName) {
             // Fer la crida a l'API One Call 3.0 amb les coordenades obtingudes
             const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${api.key}&units=metric`);
             const data = await response.json();
-            processWeatherData(data); // Processar les dades de previsió del temps
+            processWeatherDataFive(data); // Processar les dades de previsió del temps
         } else {
             console.error('Població no trobada');
         }
     } catch (err) {
         console.error('Error en obtenir les dades del temps', err);
         // Aquí pots mostrar un missatge d'error a l'usuari si és necessari
-    }
-}
-
-// Funció per processar les dades meteorològiques i mostrar-les
-function processWeatherData(data) {
-    // Bucle per processar les dades dels propers 5 dies
-    for (let i = 0; i < 5; i++) {
-        // Obté les temperatures mínima i màxima del dia i les mostra a la interfície d'usuari
-        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + Number(data.daily[i].temp.min).toFixed(1) + "ºC";
-        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + Number(data.daily[i].temp.max).toFixed(1) + "ºC";
-        // Obté el codi de l'icona del temps per a cada dia
-        const iconCode = data.daily[i].weather[0].icon;
-        // Obté l'element de la imatge corresponent a cada dia
-        const imgElement = document.getElementById("img" + (i + 1));
-
-        // Assigna una imatge adequada en funció del codi de l'icona del temps
-        // La imatge mostra les condicions meteorològiques previstes per al dia
-        if (iconCode === "01d" || iconCode === "01n") {
-            imgElement.src = "images/sun.png";
-        } else if (iconCode === "02d" || iconCode === "02n") {
-            imgElement.src = "images/few clouds.png";
-        } else if (iconCode === "03d" || iconCode === "03n") {
-            imgElement.src = "images/clouds.png";
-        } else if (iconCode === "04d" || iconCode === "04n") {
-            imgElement.src = "images/clouds.png";
-        } else if (iconCode === "09d" || iconCode === "09n") {
-            imgElement.src = "images/drizzle.png";
-        } else if (iconCode === "10d" || iconCode === "10n") {
-            imgElement.src = "images/rain.png";
-        } else if (iconCode === "11d" || iconCode === "11n") {
-            imgElement.src = "images/storm.png";
-        } else if (iconCode === "13d" || iconCode === "13n") {
-            imgElement.src = "images/snow.png";
-        } else if (iconCode === "50d" || iconCode === "50n") {
-            imgElement.src = "images/foggy.png";
-        } else {
-            imgElement.src = "images/sun.png"; //Defecte: si el codi de l'icona no coincideix amb cap dels casos anteriors, es mostra una imatge de sol per defecte
-        }
     }
 }
 
