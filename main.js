@@ -647,7 +647,6 @@ async function getWeatherByLocationFive(cityName) {
         }
     } catch (err) {
         console.error('Error en obtenir les dades del temps', err);
-        // Aquí pots mostrar un missatge d'error a l'usuari si és necessari
     }
 }
 
