@@ -497,7 +497,8 @@ async function GetWeatherByCoords(pos) {
             // Netejem el nom de la ciutat buscada amb aquesta funció
             clearName();
         } else {
-            console.error('No s\'ha pogut obtenir el nom de la ciutat');
+            // Mostro a la consola que no es poden obtenir les dades per geolocalització així puc veure l'error
+            console.error('The location name is incorrect or cannot be found.');
         }
     } catch (err) {
         console.error('Error:', err);
@@ -553,11 +554,14 @@ function GetWeatherByCoordsFive(latitude, longitude) {
     .then(data => {
         processWeatherDataFive(data); // Processar les dades de previsió del temps
     })
-    .catch(err => alert("ERROR: No s'ha pogut obtenir la informació del temps"));
+    .catch(err => alert("ERROR: Failed to get five days weather information"));
 }
 
-
-// Funció asíncrona per fer la crida a l'API de geolocalització utilitzant el nom de la ciutat
+/* Funció asíncrona per fer la crida a l'API de geolocalització utilitzant el nom de la ciutat:
+Aquesta funció és responsable d'obtenir les coordenades geogràfiques (latitud i longitud) d'una ciutat donada.
+Fa una crida a l'API de geolocalització d'OpenWeatherMap utilitzant el nom de la ciutat.
+Converteix la resposta en format JSON.
+Comprova si s'ha obtingut alguna dada vàlida de geolocalització i retorna un objecte amb les coordenades de latitud i longitud. Si no es troben dades vàlides, retorna null.*/
 async function getCoordinatesByCityName(cityName) {
     // Realitza una crida a l'API de geolocalització utilitzant el nom de la ciutat proporcionat
     const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api.key}`);
@@ -568,7 +572,6 @@ async function getCoordinatesByCityName(cityName) {
     // Si no s'ha obtingut cap dada, retorna null
     return data.length > 0 ? { lat: data[0].lat, lon: data[0].lon } : null;
 }
-
 
 // Funció per obtenir el temps actual per una ubicació específica
 async function getWeatherByName(cityName) {
@@ -622,7 +625,8 @@ async function getWeatherByName(cityName) {
             // Netejem el nom de la ciutat buscada amb aquesta funció
             clearName();
         } else {
-            console.error('Població no trobada');
+            // Alert que avisa per pantalla quan no es troba la població o el nom posat és incorrecte 
+            alert('The location name is incorrect or cannot be found.');
         }
     } catch (err) {
         // No hi poso missatge, faig que només surti al cridar el temps dels 5 dies per no duplicar el missatge d'error que rep l'usuari
@@ -630,7 +634,11 @@ async function getWeatherByName(cityName) {
 }
 
 
-// Funció per obtenir el temps dels propers 5 dies per una ubicació específica
+/*Aquesta funció és responsable d'obtenir la previsió meteorològica per als propers 5 dies per a una ubicació específica (ciutat).
+Utilitza la funció getCoordinatesByCityName(cityName) per obtenir les coordenades de la ciutat.
+Si les coordenades són vàlides, fa una crida a l'API One Call 3.0 d'OpenWeatherMap utilitzant aquestes coordenades per obtenir la previsió meteorològica.
+Converteix la resposta en format JSON i processa les dades de previsió del temps amb una funció auxiliar processWeatherDataFive(data).
+*/
 async function getWeatherByLocationFive(cityName) {
     try {
         // Obtenir les coordenades de la ciutat
@@ -643,10 +651,12 @@ async function getWeatherByLocationFive(cityName) {
             const data = await response.json();
             processWeatherDataFive(data); // Processar les dades de previsió del temps
         } else {
-            console.error('Població no trobada');
+            // Mostro el missatge per consola per jo poder veure què falla
+            console.error('The location name is incorrect or cannot be found.');
         }
     } catch (err) {
-        console.error('Error en obtenir les dades del temps', err);
+        // Mostro el missatge per consola per jo poder veure què falla
+        console.error('The location name is incorrect or cannot be found.s', err);
     }
 }
 
