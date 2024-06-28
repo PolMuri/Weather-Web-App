@@ -332,7 +332,7 @@ function selectIdiom() {
             //Amb aquesta propietat es pot canviar el text que apareix dins d'un quadre d'entrada quan aquest està buit i no s'ha escrit encara cap valor)
             //i a dins depenent de l'idioma amb el qual s'estigui apareixerà a la barra de búsqueda 
             //una cosa o una altra
-            document.getElementById("searchbox").placeholder = "Busca una localitat: ";
+            document.getElementById("searchbox").placeholder = "Busca una població ";
             //Canviar l'idioma del footer depenent de l'idioma que es seleccioni
             document.getElementById("creatorText").innerHTML = "Creat per <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             //Agafo l'id posat a l'html d'aquesta part del footer per modificar-la amb JS depenent de l'idioma seleccionat
@@ -341,19 +341,19 @@ function selectIdiom() {
 
         case 'Español':
             idiomaFetch = 'es';
-            //He decidit utilitzar aquesta sintaxi, però també es podria utilitzar: document.getElementById("searchbox").setAttribute("placeholder", "Busca una localidad: ");
-            //a sintaxi .setAttribute("placeholder", "Busca una localidad: ") és una manera més general d'afegir o modificar atributs en un element HTML a través de JavaScript. 
-            //Significa que es pot utilitzar per a qualsevol atribut, no només per a "placeholder". Per contra, la sintaxi .placeholder = "Busca una localidad: " és una forma més 
+            //He decidit utilitzar aquesta sintaxi, però també es podria utilitzar: document.getElementById("searchbox").setAttribute("placeholder", "Busca una población: ");
+            //a sintaxi .setAttribute("placeholder", "Busca una población: ") és una manera més general d'afegir o modificar atributs en un element HTML a través de JavaScript. 
+            //Significa que es pot utilitzar per a qualsevol atribut, no només per a "placeholder". Per contra, la sintaxi .placeholder = "Busca una población: " és una forma més 
             //curta i específica per a modificar el valor de l'atribut "placeholder" en un element HTML, ja que el navegador té una propietat que li correspon específicament.
             //La informació que he trobat diu que es recomana usar .setAttribute per a la compatibilitat entre navegadors, mentre que .placeholder és més còmode per a aplicacions web modernes.
-            document.getElementById("searchbox").placeholder = "Busca una localidad: ";
+            document.getElementById("searchbox").placeholder = "Busca una población ";
             document.getElementById("creatorText").innerHTML = "Creado por <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             document.getElementById("dataText").innerHTML = "Datos de <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
         case 'English':
             idiomaFetch = 'en';
-            document.getElementById("searchbox").placeholder = "Search for a location: ";
+            document.getElementById("searchbox").placeholder = "Search for a location ";
             document.getElementById("creatorText").innerHTML = "Created by <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             document.getElementById("dataText").innerHTML = "Powered by <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
