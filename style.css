@@ -192,7 +192,8 @@ footer {
     background-color: var(--text-color);
     max-width: 480px;
     margin: 0px auto;
-    border-radius: 7px;;
+    border-radius: 7px;
+    /* field-sizing: content; per quan estigui operatiu a la majoria de navegadors */
 }
 
 .search {
