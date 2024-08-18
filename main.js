@@ -79,8 +79,6 @@ function updateWeatherImage(data) {
     //ja que hi ha una categoria general de temps que les seves subcatgeories tenen noms diferents
     //a la categoria general i ho haig de fer per id llavors, que cada una de les subcategories té el seu
     const weatherIconID = (data.current.weather[0].id);
-    console.log(weatherIcon)
-    console.log(weatherIconID)
     if (weatherIcon == 'Thunderstorm') {
         src = 'images/storm.png';
     } else if (weatherIcon == 'Clear') {
