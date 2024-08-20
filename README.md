@@ -3,7 +3,7 @@ Comments in Catalan (my native lenguage), code in English.
 
 Web app to view the weather in your current location through geolocation, real-time weather anywhere in the world through name search, and a 5-day weather forecast. Javascript-HTML-CSS
 
-Live demo: https://polmuri.github.io/Weather-WebApp/
+Live demo: https://polmuri.github.io/Weather-Web-App/
 
 # Some examples in english:
 
