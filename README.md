@@ -21,11 +21,42 @@ Live demo: https://polmuri.github.io/Weather-Web-App/
   ![image](https://github.com/PolMuri/Weather-WebApp/assets/109922379/51cd0b0d-a6d2-4efa-9269-79b85af6988a)
 
   -Five days scroll:
+  
   ![1708368172873](https://github.com/PolMuri/Weather-WebApp/assets/109922379/ca24aff4-7428-4f19-a365-9062b0be4a06)
 
 # Exemple in catalan:
 ![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620)
 
+
+# Also, you can search for location + country in this format using location Barcelona country ​​Spain as an example ``valencia, es`` or ``valencia,es``, since there are many populations that exist in two or more countries at the same time. Some examples:
+
+## Valencia
+
+-Valencia, Spain:
+
+![WhatsApp Image 2024-08-23 at 15 01 18](https://github.com/user-attachments/assets/d9bbe775-cd02-494a-adfb-46112a8a1033)
+
+-Valencia, Philippines:
+
+![WhatsApp Image 2024-08-23 at 15 00 43](https://github.com/user-attachments/assets/dc1211f7-9ad1-46fd-bbab-07cec86a457d)
+
+## Cordoba
+
+-Córdoba, Spain:
+
+![WhatsApp Image 2024-08-23 at 14 54 11](https://github.com/user-attachments/assets/69f03a01-4722-4df9-a3be-bbc7272f1681)
+
+-Córdoba, Argentina:
+
+![WhatsApp Image 2024-08-23 at 14 54 30](https://github.com/user-attachments/assets/631fa367-c7a3-4992-acf3-bfa275b0a30a)
+
+# The search functionality in this application is designed to be user-friendly and flexible. Specifically:
+
+-Case Insensitivity: The search box is not case-sensitive. This means that you can enter search terms in either uppercase, lowercase, or any combination, and the results will be the same. For example, searching for "Barcelona", "barcelona", or "BARCELONA" will all yield the same results.
+
+-Accent Insensitivity: The search also ignores accents. You can type city names with or without accents, and the application will recognize them correctly. For instance, searching for "Málaga", "Malaga", or "málaga" will all return the same result.
+
+This ensures that users can find the city they are looking for without worrying about exact capitalization or accents.
 
 ## In May 2024, we have updated our integration with the OpenWeatherMap API from version One Call API 2.5 to version One Call API 3.0.
 
