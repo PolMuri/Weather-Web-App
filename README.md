@@ -52,7 +52,7 @@ Live demo: https://polmuri.github.io/Weather-Web-App/
 
 ![WhatsApp Image 2024-08-23 at 14 54 30](https://github.com/user-attachments/assets/631fa367-c7a3-4992-acf3-bfa275b0a30a)
 
-# The search functionality in this application is designed to be user-friendly and flexible. Specifically:
+# The search functionality in this application is designed to be user-friendly and flexible:
 
 -Case Insensitivity: The search box is not case-sensitive. This means that you can enter search terms in either uppercase, lowercase, or any combination, and the results will be the same. For example, searching for "Barcelona", "barcelona", or "BARCELONA" will all yield the same results.
 
