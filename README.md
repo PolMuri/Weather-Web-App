@@ -30,7 +30,7 @@ Live demo: https://polmuri.github.io/Weather-Web-App/
   ![Captura2](https://github.com/user-attachments/assets/6323f288-9b60-4e6e-8359-25439a09d14c)
 
 
-# Also, you can search for location + country in this format using location Barcelona country ​​Spain as an example ``valencia, es`` or ``valencia,es``, since there are many populations that exist in two or more countries at the same time. Some examples:
+## Also, you can search for location + country in this format using location Barcelona country ​​Spain as an example ``valencia, es`` or ``valencia,es``, since there are many populations that exist in two or more countries at the same time. Some examples:
 
 ## Valencia
 
