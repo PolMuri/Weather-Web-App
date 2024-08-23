@@ -23,10 +23,11 @@ Live demo: https://polmuri.github.io/Weather-Web-App/
 
   -Five days scroll:
   
-  ![1708368172873](https://github.com/PolMuri/Weather-WebApp/assets/109922379/ca24aff4-7428-4f19-a365-9062b0be4a06)
+  ![Captura1](https://github.com/user-attachments/assets/6fc00a47-2981-4b67-b146-688c68289ea1)
 
-# Exemple in catalan:
-![1708368172930](https://github.com/PolMuri/Weather-WebApp/assets/109922379/5e76dbe3-489c-41f5-91ab-74e73f828620)
+  -Exemple in catalan:
+
+  ![Captura2](https://github.com/user-attachments/assets/6323f288-9b60-4e6e-8359-25439a09d14c)
 
 
 # Also, you can search for location + country in this format using location Barcelona country ​​Spain as an example ``valencia, es`` or ``valencia,es``, since there are many populations that exist in two or more countries at the same time. Some examples:
