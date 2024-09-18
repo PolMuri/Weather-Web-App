@@ -15,20 +15,20 @@
 
 <body>
     <div class="custom-select">
-    <select name="Llenguatges" id="Llenguatges" onchange="selectIdiom(); selectIdiomFive()">
+    <select name="Llenguatges" id="Llenguatges" aria-label="Selecciona un llenguatge" onchange="selectIdiom(); selectIdiomFive()">
         <option value="Català" id="Català">Català</option>
         <option value="Español" id="Español">Español</option>
         <option value="English" id="English">English</option>
       </select>
       </div>
       <div id="locationButton" class="locationButton">
-		<button id="getLocation" class="getLocation"></button>
+		<button id="getLocation" class="getLocation" aria-label="Obtenir ubicació"></button>
 	</div>
    <main>
     <div class="search-form">
     <form id="search-form">
         <div class="searchbox">
-            <input type="text" autocomplete="off" placeholder="Busca una població " class="search" id="searchbox"/>
+            <input type="text" autocomplete="off" placeholder="Busca una població " class="search" id="searchbox" aria-label="Busca una població"/>
         </div>
     </form>
     </div>
