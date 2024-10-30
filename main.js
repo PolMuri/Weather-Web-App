@@ -653,10 +653,11 @@ async function getWeatherByLocationFive(cityName) {
     }
 }
 
-// Aconseguim el número correcte que es correspon al dia correcte
+// La funció CheckDay(day) permet calcular l'índex del dia correcte dins de l'array weekday 
+//(de la funció del temps dels propers 5 dies), ja sigui per la mateixa setmana o la següent.
 // Afegim el número del dia actual (obtingut a través de la funció getDay() que retorna un número del 0 al 6 representant diumenge a dissabte) al número del dia que es vol consultar. 
 // Si la suma supera 6 (que és el número màxim de dies que té una setmana), significa que el dia correspon a la següent setmana, 
-// així que se li restem 7 per obtenir el número correcte de la setmana. 
+// així que li restem 7 per obtenir el número correcte de la setmana. 
 // Si la suma no supera 6, vol dir que el dia correspon a la mateixa setmana, per tant s'obté directament el número corresponent a través de la funció.
 function CheckDay(day){
     if(day + d.getDay() > 6){
@@ -681,7 +682,7 @@ var weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendre
 function selectIdiomFive() {
     let idioma = document.getElementById("Llenguatges").value;
     let weekday = [];
-
+    // Canviem els noms dels dies en funció de l'idioma seleccionat al <select> per l'idioma que tenim a l'html amb l'id "Llenguatges". 
     switch (idioma) {
         case 'Català':
             weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
@@ -697,12 +698,16 @@ function selectIdiomFive() {
     }
 
     for(i = 0; i<5; i++){
+        // En funció de l'idioma seleccionat assignem a l'array `weekday` una llista 
+        // amb els noms dels dies de la setmana en un dels tres idiomes seleccionables.
         document.getElementById("day" + (i+1)).innerHTML = weekday[CheckDay(i)];
     }
 }
-// Canviem els noms dels dies en funció de l'idioma seleccionat al <select> per l'idioma que tenim a l'html amb l'id "Llenguatges". 
-// En funció de l'idioma seleccionat assignem a la variable `weekday` una llista de noms dels dies de la setmana.
-selectIdiomFive(); // S’executa tan bon punt es carrega la pàgina assegurant que els dies es mostrin automàticament en un idioma per defecte (el que haguem definit a l'html).
+
+// selectIdiomFive() s’executa tan bon punt es carrega la pàgina assegurant que els dies es mostrin 
+// automàticament en un idioma per defecte (el que haguem definit a l'html). Si no executem la funció apareixen les dades dels dies
+// però no apareix el nom del dia.
+selectIdiomFive(); 
   
 
 //convertim la temperatura a Celsius
