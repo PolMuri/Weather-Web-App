@@ -103,7 +103,7 @@ function updateWeatherImage(data) {
 function removeRain() {
     // Declara una variable "elements" que conté tots els elements rain del document HTML 
     // utilitzant el mètode "getElementsByTagName" de l'objecte "document" i passant com a paràmetre "rain"
-    let elements = document.getElementsByTagName("HR");
+    let elements = document.getElementsByTagName('HR');
     // Utilitza un bucle "while" per iterar mentre hi hagi elements rain en la variable "elements"
     // A cada iteració del bucle, elimina l'element rain del document HTML utilitzant el mètode "removeChild" de 
     // l'objecte parent de l'element rain (element[0].parentNode) i passant com a paràmetre l'element rain (elements[0]).
@@ -119,7 +119,7 @@ function removeRain() {
 
 // Funció per eliminar l'animació que genera la snow
 function removeSnow() {
-    let elements = document.getElementsByClassName("snow");
+    let elements = document.getElementsByClassName('snow');
     while (elements.length > 0) {
         elements[0].parentNode.removeChild(elements[0]);
     }
@@ -161,7 +161,7 @@ function backImage(data) {
     const backUrl = currentWeather.main;
     const backUrlId = currentWeather.id;
     // Posem el color del text és blanc (el mateix que al CSS)
-    document.getElementById("card").style.color = "rgb(224, 224, 230)";
+    document.getElementById('card').style.color = 'rgb(224, 224, 230)';
     // La funció "eliminarAnimacionsnow()" només es crida si hi ha un element 
     // amb l'id "scriptsnow" i s'eviten problemes amb la càrrega de la imatge de fons.
     // A partir de la segona vegada que es busquiun lloc es borrarà (si cal) l'animació de la snow
@@ -172,7 +172,7 @@ function backImage(data) {
         // Perquè no es solapin les animacions de pluja si es van buscant llocs
         // de forma consecutiva a on plogui, elimino l'animació de snow sempre, i després la creo
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/tempesta.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/tempesta.webp')";
         // ANIMACIÓ DE PLUJA EXPLICADA
         // Creem una variable anomenada "rainElement" per a ser utilitzada per a crear cada gota de pluja.
         let rainElement;
@@ -203,27 +203,27 @@ function backImage(data) {
     } else if (backUrl == 'Clear') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/cel clar.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/cel clar.webp')";
     } else if (backUrl == 'Clouds') {
         removeSnow();
         removeRain();
         // Si l'id del temps és el següent vol dir que hi ha pocs núvols (few clouds: 11-25%) i per tant poso una imatge que es correspongui
         if (backUrlId == 801) {
-            document.getElementById("card").style.backgroundImage = "url('images/lleugerament ennuvolat.webp')";
+            document.getElementById('card').style.backgroundImage = "url('images/lleugerament ennuvolat.webp')";
             // Pintem el text de color negre perquè es vegi bé amb aquesta imatge
-            document.getElementById("card").style.color = "#01081d";
+            document.getElementById('card').style.color = '#01081d';
             // Núvols del 26-50%
         } else if (backUrlId == 802) {
-            document.getElementById("card").style.backgroundImage = "url('images/nuvolositat variable.webp')";
-            document.getElementById("card").style.color = "#01081d";
+            document.getElementById('card').style.backgroundImage = "url('images/nuvolositat variable.webp')";
+            document.getElementById('card').style.color = '#01081d';
         } else {
-            document.getElementById("card").style.backgroundImage = "url('images/nuvols.webp')";
-            document.getElementById("card").style.color = "#01081d";
+            document.getElementById('card').style.backgroundImage = "url('images/nuvols.webp')";
+            document.getElementById('card').style.color = '#01081d';
         }
     } else if (backUrl == 'Drizzle') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/pluja.webp')";
         let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
@@ -238,7 +238,7 @@ function backImage(data) {
     } else if (backUrl == 'Rain') {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/pluja.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/pluja.webp')";
         let rainElement;
         let comptador = 10;
         let espaiament = window.innerWidth / comptador;
@@ -253,7 +253,7 @@ function backImage(data) {
     } else if (backUrl == 'Snow') {
         removeRain();
         removeSnow();
-        document.getElementById("card").style.backgroundImage = "url('images/neu.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/neu.webp')";
         // FUNCIÓ CREACIÓ ANIMACIÓ DE snow EXPLICADA
         // Crea 15 flocs de snow que apareixen en una posició aleatòria de la pantalla, 
         // amb una animació de caure i una duració i delay aleatori, i una vegada finalitza la animació es crea un de nou.
@@ -300,13 +300,13 @@ function backImage(data) {
     } else if (backUrl == 701 || 711 || 721 || 731 || 741 || 751 || 761 || 762 || 771 || 781) {
         removeSnow();
         removeRain();
-        document.getElementById("card").style.backgroundImage = "url('images/boira.webp')";
+        document.getElementById('card').style.backgroundImage = "url('images/boira.webp')";
     }
 }
  
 // Natejem el nom de la ciutat buscada, així ho deixem llest per buscar la següent
 const clearName = () => {
-    searchbox.value = "";
+    searchbox.value = '';
 }
 
 // A l'html hi ha l'onchange al select, que dirigeix a la funcio selectIdiom
@@ -315,7 +315,7 @@ function selectIdiom() {
     // el .value és perquè són les dades de l'apartat value del select a l'html
     // creem la variable idioma on hi guardem les dades del select-option-value
     // ara les dades de dins el value de l'html les tinc a idioma
-    let idioma = document.getElementById("Llenguatges").value;
+    let idioma = document.getElementById('Llenguatges').value;
     // ara hi passem l'idioma al switch(que com diu la variable guarden l'idioma tret de value)
     // creem la variable idiomaFetch,i li guardem un idioma o un altre per el fetch a l'hora de fer la crida de l'api
     // depenent del case que li arribi per idioma ( a idioma s'hi guarda el value del select, que
@@ -329,11 +329,11 @@ function selectIdiom() {
             // Amb aquesta propietat es pot canviar el text que apareix dins d'un quadre d'entrada quan aquest està buit i no s'ha escrit encara cap valor)
             // i a dins depenent de l'idioma amb el qual s'estigui apareixerà a la barra de búsqueda 
             // una cosa o una altra
-            document.getElementById("searchbox").placeholder = "Busca una població ";
+            document.getElementById('searchbox').placeholder = 'Busca una població ';
             // Canviar l'idioma del footer depenent de l'idioma que es seleccioni
-            document.getElementById("creatorText").innerHTML = "Creat per <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById('creatorText').innerHTML = "Creat per <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
             // Agafem l'id posat a l'html d'aquesta part del footer per modificar-la amb JS depenent de l'idioma seleccionat
-            document.getElementById("dataText").innerHTML = "Dades d' <a href='https://openweathermap.org/'>OpenWeather</a>";
+            document.getElementById('dataText').innerHTML = "Dades d' <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
         case 'Español':
@@ -343,16 +343,16 @@ function selectIdiom() {
             // Significa que es pot utilitzar per a qualsevol atribut, no només per a "placeholder". Per contra, la sintaxi .placeholder = "Busca una población: " és una forma més 
             // curta i específica per a modificar el valor de l'atribut "placeholder" en un element HTML, ja que el navegador té una propietat que li correspon específicament.
             // La informació que he trobat diu que es recomana usar .setAttribute per a la compatibilitat entre navegadors, mentre que .placeholder és més còmode per a aplicacions web modernes.
-            document.getElementById("searchbox").placeholder = "Busca una población ";
-            document.getElementById("creatorText").innerHTML = "Creado por <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
-            document.getElementById("dataText").innerHTML = "Datos de <a href='https://openweathermap.org/'>OpenWeather</a>";
+            document.getElementById('searchbox').placeholder = 'Busca una población ';
+            document.getElementById('creatorText').innerHTML = "Creado por <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById('dataText').innerHTML = "Datos de <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
 
         case 'English':
             idiomaFetch = 'en';
-            document.getElementById("searchbox").placeholder = "Search for a location ";
-            document.getElementById("creatorText").innerHTML = "Created by <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
-            document.getElementById("dataText").innerHTML = "Powered by <a href='https://openweathermap.org/'>OpenWeather</a>";
+            document.getElementById('searchbox').placeholder = 'Search for a location ';
+            document.getElementById('creatorText').innerHTML = "Created by <a href='https://www.linkedin.com/in/pol-murillas-ledesma-29b23b241/'>Pol Murillas Ledesma</a>";
+            document.getElementById('dataText').innerHTML = "Powered by <a href='https://openweathermap.org/'>OpenWeather</a>";
             break;
     }
     return idiomaFetch;
@@ -392,13 +392,13 @@ function error(err) {
 // L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
 // un event listener al botó amb id "getLocation". Quan l'usuari cliqui aquest botó, es cridarà la funció navigator.geolocation.getCurrentPosition 
 // amb les opcions especificades a options, les funcions GetWeatherByCoords i error com a arguments, i es passaran les dades obtingudes a la funció GetWeatherByCoords.
-document.getElementById("getLocation").addEventListener("click", function () {
+document.getElementById('getLocation').addEventListener('click', function () {
     navigator.geolocation.getCurrentPosition(GetWeatherByCoords, error, options);
 });
 
 // És un esdeveniment d'onclick que s'afegeix a l'element amb l'identificador "getLocation" a 
 // través de la funció addEventListener(). Quan l'usuari fa clic en aquest element, es crida la funció getLocation().
-document.getElementById("getLocation").addEventListener("click", function () {
+document.getElementById('getLocation').addEventListener('click', function () {
     getLocation();
 });
 
@@ -510,34 +510,34 @@ function processWeatherDataFive(data) {
         // Obté i arrodoneix la temperatura màxima per al dia actual i la converteix en string amb una decimal
         const maxTemp = data.daily[i].temp.max.toFixed(1);
         // Actualitzem el contingut HTML dels elements d'etiqueta "span" per mostrar la temperatura mínima i màxima
-        document.getElementById("day" + (i + 1) + "Min").innerHTML = "Min: " + minTemp + "ºC";
-        document.getElementById("day" + (i + 1) + "Max").innerHTML = "Max: " + maxTemp + "ºC";
+        document.getElementById('day' + (i + 1) + 'Min').innerHTML = 'Min: ' + minTemp + 'ºC';
+        document.getElementById('day' + (i + 1) + 'Max').innerHTML = 'Max: ' + maxTemp + 'ºC';
        // Obté el codi de la icona del temps per al dia actual
         const iconCode = data.daily[i].weather[0].icon;
         // Obté l'element de la imatge corresponent a l'índex actual (del dia)
-        const imgElement = document.getElementById("img" + (i + 1));
+        const imgElement = document.getElementById('img' + (i + 1));
         // Assigna l'icona corresponent basada en el codi de l'ícona proporcionat per l'API
-        if (iconCode === "01d" || iconCode === "01n") {
-            imgElement.src = "images/sun.png";
-        } else if (iconCode === "02d" || iconCode === "02n") {
-            imgElement.src = "images/few clouds.png";
-        } else if (iconCode === "03d" || iconCode === "03n") {
-            imgElement.src = "images/clouds.png";
-        } else if (iconCode === "04d" || iconCode === "04n") {
-            imgElement.src = "images/clouds.png";
-        } else if (iconCode === "09d" || iconCode === "09n") {
-            imgElement.src = "images/drizzle.png";
-        } else if (iconCode === "10d" || iconCode === "10n") {
-            imgElement.src = "images/rain.png";
-        } else if (iconCode === "11d" || iconCode === "11n") {
-            imgElement.src = "images/storm.png";
-        } else if (iconCode === "13d" || iconCode === "13n") {
-            imgElement.src = "images/snow.png";
-        } else if (iconCode === "50d" || iconCode === "50n") {
-            imgElement.src = "images/foggy.png";
+        if (iconCode === '01d' || iconCode === '01n') {
+            imgElement.src = 'images/sun.png';
+        } else if (iconCode === '02d' || iconCode === '02n') {
+            imgElement.src = 'images/few clouds.png';
+        } else if (iconCode === '03d' || iconCode === '03n') {
+            imgElement.src = 'images/clouds.png';
+        } else if (iconCode === '04d' || iconCode === '04n') {
+            imgElement.src = 'images/clouds.png';
+        } else if (iconCode === '09d' || iconCode === '09n') {
+            imgElement.src = 'images/drizzle.png';
+        } else if (iconCode === '10d' || iconCode === '10n') {
+            imgElement.src = 'images/rain.png';
+        } else if (iconCode === '11d' || iconCode === '11n') {
+            imgElement.src = 'images/storm.png';
+        } else if (iconCode === '13d' || iconCode === '13n') {
+            imgElement.src = 'images/snow.png';
+        } else if (iconCode === '50d' || iconCode === '50n') {
+            imgElement.src = 'images/foggy.png';
         } else {
             // Per defecte: si el codi de l'icona no coincideix amb cap dels casos anteriors, es mostra una imatge de sol per defecte
-            imgElement.src = "images/sun.png";
+            imgElement.src = 'images/sun.png';
         }
     }
 }
@@ -549,7 +549,7 @@ function GetWeatherByCoordsFive(latitude, longitude) {
     .then(data => {
         processWeatherDataFive(data); // Processem les dades de previsió del temps
     })
-    .catch(err => alert("ERROR: Failed to get five days weather information"));
+    .catch(err => alert('ERROR: Failed to get five days weather information'));
 }
 
 // Funció asíncrona per fer la crida a l'API de geolocalització utilitzant el nom de la ciutat:
@@ -673,34 +673,34 @@ function CheckDay(day){
 // s'inicialitza amb els noms dels dies de la setmana en català per defecte, però es sobreescriu amb els noms 
 // en l'idioma seleccionat a través del select del formulari.
 var d = new Date();
-var weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte",];
+var weekday = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte',];
 
 // Amb aquesta funció primer obtenim l'idioma seleccionat del desplegable amb id Llenguatges. Després amb el
 // switch s'assigna a l'array weekday l'array de noms de dies corresponent a l'idioma seleccionat. Finalment, la 
 // funció utilitza l'array weekday per posar els noms dels dies a la pantalla. 
 
 function selectIdiomFive() {
-    let idioma = document.getElementById("Llenguatges").value;
+    let idioma = document.getElementById('Llenguatges').value;
     let weekday = [];
     // Canviem els noms dels dies en funció de l'idioma seleccionat al <select> per l'idioma que tenim a l'html amb l'id "Llenguatges". 
     switch (idioma) {
         case 'Català':
-            weekday = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
+            weekday = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte'];
             break;
 
         case 'Español':
-            weekday = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            weekday = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             break;
 
         case 'English':
-            weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             break;
     }
 
     for(i = 0; i<5; i++){
         // En funció de l'idioma seleccionat assignem a l'array `weekday` una llista 
         // amb els noms dels dies de la setmana en un dels tres idiomes seleccionables.
-        document.getElementById("day" + (i+1)).innerHTML = weekday[CheckDay(i)];
+        document.getElementById('day' + (i+1)).innerHTML = weekday[CheckDay(i)];
     }
 }
 
