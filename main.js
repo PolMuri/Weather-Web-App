@@ -66,16 +66,6 @@ function triggerAnimation() {
     }, 15); // El temps d'espera és de 15 mil·lisegons (0.01 segons), pràcticament imperceptible per a l'usuari.
 }
 
-// Afegim un "escoltador" d'esdeveniments ('event listener') al formulari de cerca.
-// Cada vegada que l'usuari envia el formulari (per exemple, quan preme el botó de cerca o prem Enter),
-// s'executa la funció triggerAnimation(), que reactiva l'animació de la tarja del temps.
-document.getElementById('search-form').addEventListener('submit', triggerAnimation);
-
-// Afegim un altre "escoltador" d'esdeveniments al botó de geolocalització.
-// Quan l'usuari cliqui sobre el botó per obtenir la seva ubicació actual,
-// també s'executa la funció triggerAnimation() per reiniciar l'animació de la weather card del temps.
-document.getElementById('getLocation').addEventListener('click', triggerAnimation);
-
 // Basat en la temperatura, posem una imatge o una altra
 function updateImages(responseData) {
     const temp = (responseData.current.temp);
@@ -518,6 +508,8 @@ async function GetWeatherByCoords(pos) {
             backImage(responseData);
             // Netejem el nom de la ciutat buscada amb aquesta funció
             clearName();
+            // Aquí cridem l'animació de la weather card un cop ja hem carregat totes les dades del temps de la població buscada
+            triggerAnimation(); 
         } else {
             // Mostrem a la consola que no es poden obtenir les dades per geolocalització així puc veure l'error
             console.error('The location name is incorrect or cannot be found.');
@@ -645,6 +637,8 @@ async function getWeatherByName(cityName) {
             backImage(responseData);
             // Netejem el nom de la ciutat buscada amb aquesta funció
             clearName();
+            // Aquí cridem l'animació de la weather card un cop ja hem carregat totes les dades del temps de la població buscada
+            triggerAnimation(); 
         } else {
             // Alert que avisa per pantalla quan no es troba la població o el nom posat és incorrecte 
             alert('The location name is incorrect or cannot be found.');
