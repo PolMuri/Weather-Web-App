@@ -49,6 +49,33 @@ function onSubmit(event) {
     getWeatherByLocationFive(searchbox.value);
 }
 
+function triggerAnimation() {
+    // Obtenim l'element amb la classe '.weather-card' que conté les dades del temps.
+    const weatherCard = document.querySelector('.weather-card');
+    
+    // Eliminem temporalment la classe 'animate' de l'element. 
+    // Això fa que l'animació s'aturi, ja que la classe 'animate' és la que defineix l'animació CSS.
+    weatherCard.classList.remove('animate');
+    
+    // Utilitzem setTimeout per esperar un curt període de temps (15 mil·lisegons).
+    // Aquesta pausa permet al navegador "reconèixer" que hem eliminat la classe i està a punt per reiniciar l'animació.
+    setTimeout(() => {
+        // Després de la pausa, tornem a afegir la classe 'animate' a l'element.
+        // Això reactiva l'animació definida en el CSS.
+        weatherCard.classList.add('animate');
+    }, 15); // El temps d'espera és de 15 mil·lisegons (0.01 segons), pràcticament imperceptible per a l'usuari.
+}
+
+// Afegim un "escoltador" d'esdeveniments ('event listener') al formulari de cerca.
+// Cada vegada que l'usuari envia el formulari (per exemple, quan preme el botó de cerca o prem Enter),
+// s'executa la funció triggerAnimation(), que reactiva l'animació de la tarja del temps.
+document.getElementById('search-form').addEventListener('submit', triggerAnimation);
+
+// Afegim un altre "escoltador" d'esdeveniments al botó de geolocalització.
+// Quan l'usuari cliqui sobre el botó per obtenir la seva ubicació actual,
+// també s'executa la funció triggerAnimation() per reiniciar l'animació de la weather card del temps.
+document.getElementById('getLocation').addEventListener('click', triggerAnimation);
+
 // Basat en la temperatura, posem una imatge o una altra
 function updateImages(responseData) {
     const temp = (responseData.current.temp);
