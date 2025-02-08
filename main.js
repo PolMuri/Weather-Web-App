@@ -482,23 +482,30 @@ async function GetWeatherByCoords(pos) {
             // Primer declarem la variable idiomSun (amb el let ja que el seu valor es pot modificar posteriorment) que tindra el resultat que retorna la funció selectIdiom()
             let idiomSun = selectIdiom();
             // Depenent de l'idioma que retorni la funció selectIdiom escrivim quan surt i es pon el sol en un idioma o un altre
-            if (idiomSun === 'ca') {
+                
+            switch (idiomSun) {
                 // S'envien els valors data.sys.sunrise, data.sys.sunset a la funció formatSunRiseSetHour, aquesta processa aquests valors en format UNIX que contenen
                 // la hora en que surt i es pon el sol, i la mateixa funció amb el .formattedSunrise o .formattedSunset retorna el valor caluclat en la funció formatSunRiseSetHour
                 // que serà o bé la hora en que surt o es pon el sol en format comprensible (hores normals)
-                // com es pot veure S'utilitza la notació de punt per accedir a les propietats formattedSunrise i formattedSunset de l'objecte retornat, 
+                // com es pot veure s'utilitza la notació de punt per accedir a les propietats formattedSunrise i formattedSunset de l'objecte retornat, 
                 // que contenen les cadenes formatejades corresponents a l'hora que surt el sol i quan es pon, respectivament.
+                case 'ca':
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
-            } else if (idiomSun === 'es') {
+                break;
+    
+                case 'es': 
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
-            } else {
+                break;
+    
+                case 'en':
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+                break;
             }
 
             // Basat en la temperatura, posem una imatge o una altra
@@ -614,20 +621,26 @@ async function getWeatherByName(cityName) {
             wind.innerHTML = `Vel: ${responseData.current.wind_speed} Met./seg.`;
             pressioAtmos.innerHTML = `Pres. Atmos: ${responseData.current.pressure} hPa`;
 
-            // Afegeim la lògica per a l'hora dels sols ens els diferents idiomes que tenim
+            // El case per a l'hora dels sols ens els diferents idiomes que tenim
             let idiomSun = selectIdiom();
-            if (idiomSun === 'ca') {
+            switch (idiomSun) {
+                case 'ca':
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> Sortida del sol: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> Posta de sol:
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
-            } else if (idiomSun === 'es') {
+                break;
+
+                case 'es': 
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img">  Amanece a las: ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> El ocaso a las:
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
-            } else {
+                break;
+
+                case 'en':
                 sunRiseSet.innerHTML = `<img src="images/sunrise.png" alt="sunrise" class="RaiseSun-img"> The sunrise is : ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunrise}
                 <img src="images/sunset.png" alt="sunset" class="RaiseSun-img"> The sunset is :
                 ${formatSunRiseSetHour(responseData.current.sunrise, responseData.current.sunset).formattedSunset}`;
+                break;
             }
 
             // Basat en la temperatura, posem una imatge o una altra
