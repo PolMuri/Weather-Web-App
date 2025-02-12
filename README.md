@@ -5,6 +5,8 @@ Web app to view the weather in your current location through geolocation, real-t
 
 Live demo: https://polmuri.github.io/Weather-Web-App/
 
+This application was built as a learning exercise to improve my skills in Javascript, CSS and HTML. Expect unoptimized code!
+
 # Some examples in english:
 
   -Clear Sky:
