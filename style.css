@@ -1,11 +1,11 @@
 * {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 :root {
     --bg-color: #2C2C2C;
     --text-color: rgb(224, 224, 230); 
-    font-size: 18px;
+    font-size: 0.95rem;
 }
 
 body {
