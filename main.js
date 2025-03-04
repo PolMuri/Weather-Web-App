@@ -403,7 +403,7 @@ function getLocationSuccess(pos) {
 // error: aquesta funció és cridada si hi ha un error en obtenir les dades de geolocalització. L'argument de la funció és un 
 // objecte err que conté informació sobre l'error.
 function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    console.warn(`ERROR: It is not possible to obtain the location(${err.code}): ${err.message}`);
 }
 
 // L'Event Listener: document.getElementById("getLocation").addEventListener("click", function() { ... }: aquesta línia assigna a 
